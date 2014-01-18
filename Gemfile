@@ -12,6 +12,8 @@ gem 'therubyracer'
 gem 'jquery-rails'
 
 gem 'puma'
+gem 'sidekiq'
+gem 'addressable'
 
 platform :rbx do
   gem 'rubysl'
@@ -20,9 +22,13 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
+end
+
+group :test do
   gem 'wrong', github: 'pludoni/wrong'
 
   gem 'rubysl-test-unit', platform: :rbx
+  gem 'webmock'
 end
 
 # Use ActiveModel has_secure_password
