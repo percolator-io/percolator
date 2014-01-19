@@ -46,11 +46,16 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
-  config.after(:each) do
+  config.before :all do
+    ElasticsearchSchema.create_indices
+    ElasticsearchSchema.put_mappings
+  end
+
+  config.after :each do
     BaseSearchRepository.remove_all_documents
   end
 
-  config.after(:all) do
+  config.after :all do
     BaseSearchRepository.remove_all_indicies
   end
 end
