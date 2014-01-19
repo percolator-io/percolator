@@ -7,4 +7,8 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
       client.index  index: self.class.index, type: self.class.type, id: id, body: attrs
     end
   end
+
+  def id_from_url(url)
+    Digest::MD5.hexdigest url.to_s
+  end
 end

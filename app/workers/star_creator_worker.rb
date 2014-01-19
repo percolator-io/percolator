@@ -11,10 +11,8 @@ class StarCreatorWorker
         html: response.body
     }
 
-    link = uri.to_s
-    id = Digest::MD5.hexdigest link
-
     repository = HtmlDocumentSearchRepository.new
+    id = repository.id_from_url uri
     repository.store id, attrs
   end
 end
