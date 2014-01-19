@@ -7,6 +7,7 @@ require 'wrong/adapters/rspec'
 require 'webmock/rspec'
 require 'sidekiq/testing'
 
+WebMock.disable_net_connect!(allow_localhost: true)
 Sidekiq::Testing.inline!
 
 # Requires supporting ruby files with custom matchers and macros, etc,

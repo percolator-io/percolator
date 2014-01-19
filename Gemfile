@@ -14,6 +14,7 @@ gem 'jquery-rails'
 gem 'puma'
 gem 'sidekiq'
 gem 'addressable'
+gem 'elasticsearch'
 
 platform :rbx do
   gem 'rubysl'
