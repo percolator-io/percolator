@@ -15,6 +15,7 @@ gem 'puma'
 gem 'sidekiq'
 gem 'addressable'
 gem 'elasticsearch'
+gem 'haml'
 
 platform :rbx do
   gem 'rubysl'
