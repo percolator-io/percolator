@@ -11,25 +11,18 @@ gem 'therubyracer'
 
 gem 'jquery-rails'
 
-gem 'puma'
 gem 'sidekiq'
 gem 'addressable'
 gem 'elasticsearch'
 gem 'haml'
 
-platform :rbx do
-  gem 'rubysl'
-  gem 'racc'
-end
-
 group :development, :test do
   gem 'rspec-rails'
+  gem 'spork-rails'
 end
 
 group :test do
   gem 'wrong', github: 'pludoni/wrong'
-
-  gem 'rubysl-test-unit', platform: :rbx
   gem 'webmock'
 end
 
