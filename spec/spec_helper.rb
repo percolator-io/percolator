@@ -47,6 +47,7 @@ RSpec.configure do |config|
   config.order = "random"
 
   config.before :all do
+    BaseSearchRepository.remove_all_indicies
     ElasticsearchSchema.create_indices
     ElasticsearchSchema.put_mappings
   end
