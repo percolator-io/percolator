@@ -1,12 +1,17 @@
 Asearcher::Application.routes.draw do
+
+  scope module: :web do
+    root 'welcome#index'
+  end
+
+  namespace :web_api do
+    resources :search_results
+  end
+
   namespace :api do
     namespace :v1 do
       resources :stars, only: :create
     end
-  end
-
-  scope module: :web do
-    root 'welcome#index'
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
