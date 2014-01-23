@@ -1,7 +1,7 @@
 class StarCreatorWorker
   include Sidekiq::Worker
 
-  def perform(uri_components)
+  def perform(id, uri_components)
     uri_components.symbolize_keys!
     uri = Addressable::URI.new uri_components
 
@@ -12,7 +12,6 @@ class StarCreatorWorker
     }
 
     repository = HtmlDocumentSearchRepository.new
-    id = repository.id_from_url uri
     repository.store id, attrs
   end
 end

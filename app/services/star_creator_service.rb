@@ -11,7 +11,11 @@ class StarCreatorService
   end
 
   def create
-    StarCreatorWorker.perform_async uri_components
+    url_service = UrlService.from_string url
+    uri_components = url_service.uri.to_hash
+    id = url_service.calculate_id
+
+    StarCreatorWorker.perform_async id, uri_components
   end
 
   private
