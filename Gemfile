@@ -14,6 +14,7 @@ gem 'bootstrap-sass'
 gem 'sidekiq'
 gem 'addressable'
 gem 'elasticsearch'
+gem 'virtus'
 
 gem 'simple_form'
 
