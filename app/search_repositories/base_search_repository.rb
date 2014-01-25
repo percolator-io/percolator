@@ -1,6 +1,5 @@
 class BaseSearchRepository
-  # TODO: fix port
-  POOL = ConnectionPool.new(size:  10, timeout: 3) { Elasticsearch::Client.new host: 'localhost:9201' }
+  POOL = ConnectionPool.new(size:  10, timeout: 3) { Elasticsearch::Client.new host: Figaro.env.elasticsearch_host }
 
   cattr_accessor :index, :type
 

@@ -20,6 +20,8 @@ gem 'hashie'
 
 gem 'simple_form'
 
+gem 'figaro'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'spork-rails'

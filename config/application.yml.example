@@ -1,0 +1,4 @@
+ELASTICSEARCH_HOST: localhost:9200
+
+test:
+  ELASTICSEARCH_HOST: localhost:9201

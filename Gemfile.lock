@@ -72,6 +72,9 @@ GEM
       railties (>= 3.0.0)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
+    figaro (0.7.0)
+      bundler (~> 1.0)
+      rails (>= 3, < 5)
     haml (4.0.5)
       tilt
     hashie (2.0.5)
@@ -197,6 +200,7 @@ DEPENDENCIES
   bootstrap-sass
   elasticsearch
   factory_girl_rails
+  figaro
   haml
   hashie
   jquery-rails
