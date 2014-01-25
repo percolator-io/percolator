@@ -1,16 +1,19 @@
 class StarCreatorWorker
   include Sidekiq::Worker
 
-  def perform(id, uri_components)
-    uri_components.symbolize_keys!
-    uri = Addressable::URI.new uri_components
+  def perform(normalized_uri_components)
+    normalized_uri_components.symbolize_keys!
+    uri = Addressable::URI.new normalized_uri_components
 
-    response = Net::HTTP.get_response(uri.host, uri.request_uri, uri.port)
+    response = Net::HTTP.get(uri)
 
     attrs = {
-        html: response.body
+        url: uri.to_s,
+        host: uri.host,
+        html: response,
     }
 
+    id = IdGenerator.from_normalized_uri uri
     repository = HtmlDocumentSearchRepository.new
     repository.store id, attrs
   end

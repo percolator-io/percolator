@@ -3,8 +3,7 @@ require 'spec_helper'
 describe Api::V1::StarsController do
   before do
     @url = 'http://example.com/page.html'
-    url_service = UrlService.from_string @url
-    @id = url_service.calculate_id
+    @id = IdGenerator.from_normalized_uri @url
   end
 
   describe "POST 'create'" do
@@ -18,7 +17,7 @@ describe Api::V1::StarsController do
       stub.should have_been_requested
 
       repository = HtmlDocumentSearchRepository.new
-      repository.find!(@id)  #TODO: add exists? method
+      assert { repository.exists(@id) == true }
     end
   end
 end

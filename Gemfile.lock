@@ -65,10 +65,16 @@ GEM
     equalizer (0.0.9)
     erubis (2.7.0)
     execjs (2.0.2)
+    factory_girl (4.3.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.3.0)
+      factory_girl (~> 4.3.0)
+      railties (>= 3.0.0)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
     haml (4.0.5)
       tilt
+    hashie (2.0.5)
     hike (1.2.3)
     i18n (0.6.9)
     ice_nine (0.11.0)
@@ -185,7 +191,9 @@ DEPENDENCIES
   addressable
   bootstrap-sass
   elasticsearch
+  factory_girl_rails
   haml
+  hashie
   jquery-rails
   pg
   rails (= 4.0.2)

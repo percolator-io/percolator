@@ -20,12 +20,18 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
 
   def find!(id)
     result = nil
-    params = address.merge id: id
+    params = address.merge id: id, fields: %i(url host)
     POOL.with do |client|
       result = client.get params
     end
 
-    result
+    wrap_item result
+  end
+
+  def exists(id)
+    POOL.with do |client|
+      client.exists address.merge id: id
+    end
   end
 
   def store(id, attrs)
@@ -39,5 +45,17 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
 private
   def address
     { index: self.class.index, type: self.class.type }
+  end
+
+  def wrap_item(params)
+    mash = Hashie::Mash.new params
+
+    attrs = {
+        id: mash._id,
+        url: mash.fields.url.first,
+        host: mash.fields.host.first,
+    }
+
+    HtmlDocument.new attrs
   end
 end

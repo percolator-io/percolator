@@ -11,22 +11,10 @@ class StarCreatorService
   end
 
   def create
-    url_service = UrlService.from_string url
-    uri_components = url_service.uri.to_hash
-    id = url_service.calculate_id
-
-    StarCreatorWorker.perform_async id, uri_components
-  end
-
-  private
-  def uri_components
-    #TODO: wrap Addressable errors
-
     uri = Addressable::URI.parse url
-    uri.normalize!
+    normalized_uri = UriNormalizer.normalize uri
+    components = normalized_uri.to_hash
 
-    components = uri.to_hash
-    components.delete :fragment
-    components
+    StarCreatorWorker.perform_async components
   end
 end

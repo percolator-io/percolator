@@ -15,6 +15,7 @@ gem 'sidekiq'
 gem 'addressable'
 gem 'elasticsearch'
 gem 'virtus'
+gem 'hashie'
 
 gem 'simple_form'
 
@@ -26,6 +27,7 @@ end
 group :test do
   gem 'wrong', github: 'pludoni/wrong'
   gem 'webmock'
+  gem 'factory_girl_rails'
 end
 
 # Use ActiveModel has_secure_password

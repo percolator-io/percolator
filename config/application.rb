@@ -14,6 +14,7 @@ Bundler.require(:default, Rails.env)
 module Asearcher
   class Application < Rails::Application
     config.autoload_paths += %W(#{config.root}/lib)
+    #config.eager_load_paths += %W(#{config.root}/lib) #TODO for sidekiq
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
