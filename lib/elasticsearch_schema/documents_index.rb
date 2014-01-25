@@ -3,13 +3,16 @@ module ElasticsearchSchema
     class << self
       def mappings
         {
-            html_document: {
-              properties: {
-                  html: { type: :string },
-                  url: { type: :string },
-                  host: { type: :string },
-              }
+          html_document: {
+            properties: {
+              html: { type: :string },
+              url: { type: :string },
+              host: { type: :string },
+              title: { type: :string },
+              description: { type: :string },
+              keywords: { type: :string },
             }
+          }
         }
       end
     end

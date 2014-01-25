@@ -31,9 +31,9 @@ var Item = React.createClass({
       <li className='media'>
         <div className="media-body">
           <h4 className="media-heading">
-            <a href={this.props.url}>{this.props.id}</a>
+            <a href={this.props.url}>{this.props.title}</a>
           </h4>
-          <p>{this.props.host}</p>
+          <p>{this.props.description}</p>
         </div>
 
       </li>

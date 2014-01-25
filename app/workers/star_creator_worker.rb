@@ -5,9 +5,14 @@ class StarCreatorWorker
     normalized_uri_components.symbolize_keys!
     uri = Addressable::URI.new normalized_uri_components
 
+    #TODO: check status
     response = Net::HTTP.get(uri)
+    doc = Nokogiri::HTML response
 
     attrs = {
+        title: doc.xpath('/html/head/title').first.try(:content),
+        description: doc.xpath('/html/head/meta[@name="description"]/@content').first.try(:value),
+        keywords: doc.xpath('/html/head/meta[@name="keywords"]/@content').first.try(:value).try(:split, ','),
         url: uri.to_s,
         host: uri.host,
         html: response,

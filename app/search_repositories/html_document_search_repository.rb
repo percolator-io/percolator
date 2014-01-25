@@ -2,6 +2,8 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
   self.index = :documents
   self.type = :html_document
 
+  FIELDS = %i(title description keywords url host)
+
   def search(q)
     return [] if q.blank?
 
@@ -9,7 +11,7 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
     body = {
         query: { match: { _all: q } }
     }
-    params = address.merge body: body, fields: %i(url host)
+    params = address.merge body: body, fields: FIELDS
 
     POOL.with do |client|
       results = client.search params
@@ -21,7 +23,7 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
 
   def find!(id)
     result = nil
-    params = address.merge id: id, fields: %i(url host)
+    params = address.merge id: id, fields: FIELDS
     POOL.with do |client|
       result = client.get params
     end
@@ -52,6 +54,10 @@ private
   def wrap_item(mash)
     attrs = {
         id: mash._id,
+        title: mash.fields.title.try(:first),
+        description: mash.fields.description.try(:first),
+        keywords: mash.fields.keywords,
+
         url: mash.fields.url.first,
         host: mash.fields.host.first,
     }

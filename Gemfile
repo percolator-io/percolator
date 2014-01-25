@@ -17,6 +17,7 @@ gem 'addressable'
 gem 'elasticsearch'
 gem 'virtus'
 gem 'hashie'
+gem 'nokogiri'
 
 gem 'simple_form'
 

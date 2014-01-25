@@ -1,0 +1,10 @@
+!!!
+%html
+  %head
+    %title= title
+    - if description.present?
+      %meta{ name: 'description', content: "#{description}" }
+    - if keywords.present?
+      %meta{ name: 'keywords', content: "#{keywords}" }
+  %body
+    = body
