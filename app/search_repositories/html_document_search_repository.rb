@@ -9,13 +9,14 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
     body = {
         query: { match: { _all: q } }
     }
-    params = address.merge body: body
+    params = address.merge body: body, fields: %i(url host)
 
     POOL.with do |client|
       results = client.search params
     end
 
-    results
+    mash = Hashie::Mash.new results
+    mash.hits.hits.map{ |i| wrap_item i }
   end
 
   def find!(id)
@@ -25,7 +26,8 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
       result = client.get params
     end
 
-    wrap_item result
+    mash = Hashie::Mash.new result
+    wrap_item mash
   end
 
   def exists(id)
@@ -47,9 +49,7 @@ private
     { index: self.class.index, type: self.class.type }
   end
 
-  def wrap_item(params)
-    mash = Hashie::Mash.new params
-
+  def wrap_item(mash)
     attrs = {
         id: mash._id,
         url: mash.fields.url.first,
