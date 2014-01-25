@@ -5,20 +5,22 @@ class StarCreatorWorker
     normalized_uri_components.symbolize_keys!
     uri = Addressable::URI.new normalized_uri_components
 
-    response = Net::HTTP.get_response(uri)
-    #TODO: check status
-    raise "Status: #{response.code}" if response.code != '200'
-
-    doc = Nokogiri::HTML response.body
-
     attrs = {
-        title: doc.xpath('/html/head/title').first.try(:content),
-        description: doc.xpath('/html/head/meta[@name="description"]/@content').first.try(:value),
-        keywords: doc.xpath('/html/head/meta[@name="keywords"]/@content').first.try(:value).try(:split, ','),
         url: uri.to_s,
         host: uri.host,
-        html: response,
     }
+
+    a = Mechanize.new do |agent|
+      agent.user_agent_alias = 'Mac Safari'
+    end
+
+    #TODO: может проставить заголовки Accept, что бы page имел класс Mechanize::Page
+    a.get(uri) do |page|
+      attrs[:html] = page.content
+      attrs[:title] = page.title
+      attrs[:description] = page.search('/html/head/meta[@name="description"]/@content').first.try(:value)
+      attrs[:keywords] = page.search('/html/head/meta[@name="keywords"]/@content').first.try(:value).try(:split, ',')
+    end
 
     id = IdGenerator.from_normalized_uri uri
     repository = HtmlDocumentSearchRepository.new

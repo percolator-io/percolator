@@ -11,7 +11,7 @@ describe Api::V1::StarsController do
 
   describe "POST 'create'" do
     it "returns http success" do
-      stub = stub_request(:get, @url).to_return(status: 200, body: @page)
+      stub = stub_request(:get, @url).to_return(status: 200, body: @page, headers: { "Content-Type" => 'text/html' })
       params = { url: @url }
 
       post :create, star: params
