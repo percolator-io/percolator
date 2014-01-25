@@ -110,6 +110,11 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.1.1)
+    react-rails (0.8.0.0)
+      execjs
+      rails (>= 3.1)
+      react-source (= 0.8.0)
+    react-source (0.8.0)
     redis (3.0.6)
     redis-namespace (1.4.1)
       redis (~> 3.0.4)
@@ -197,6 +202,7 @@ DEPENDENCIES
   jquery-rails
   pg
   rails (= 4.0.2)
+  react-rails
   rspec-rails
   sass-rails (>= 3.2)
   sidekiq

@@ -10,6 +10,7 @@ gem 'jquery-rails'
 gem 'sass-rails', '>= 3.2'
 gem 'haml'
 gem 'bootstrap-sass'
+gem 'react-rails'
 
 gem 'sidekiq'
 gem 'addressable'
