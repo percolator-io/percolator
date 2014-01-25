@@ -1,20 +1,17 @@
-class StarCreatorService
+module StarCreatorService
   class BaseError < StandardError; end
   class BlankUrlError < BaseError; end
 
-  attr_reader :url
+  class << self
+    def create(url)
+      raise BlankUrlError if url.blank?
 
-  def initialize(url)
-    raise BlankUrlError if url.blank?
+      uri = Addressable::URI.parse url
+      normalized_uri = UriNormalizer.normalize uri
+      components = normalized_uri.to_hash
 
-    @url = url
+      StarCreatorWorker.perform_async components
+    end
   end
 
-  def create
-    uri = Addressable::URI.parse url
-    normalized_uri = UriNormalizer.normalize uri
-    components = normalized_uri.to_hash
-
-    StarCreatorWorker.perform_async components
-  end
 end
