@@ -10,11 +10,5 @@ class BaseSearchRepository
         client.delete_by_query index: '_all', body: { query: { match_all: {} } }
       end
     end
-
-    def remove_all_indicies
-      POOL.with do |client|
-        client.indices.delete index: '_all'
-      end
-    end
   end
 end

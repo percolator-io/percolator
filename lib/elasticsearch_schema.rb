@@ -6,6 +6,12 @@ module ElasticsearchSchema
       end
     end
 
+    def remove_indicies
+      BaseSearchRepository::POOL.with do |client|
+        client.indices.delete index: '_all'
+      end
+    end
+
     def put_mappings
       BaseSearchRepository::POOL.with do |client|
         ElasticsearchSchema::DocumentsIndex.mappings.each do |type, mapping|
