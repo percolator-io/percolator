@@ -5,9 +5,11 @@ class StarCreatorWorker
     normalized_uri_components.symbolize_keys!
     uri = Addressable::URI.new normalized_uri_components
 
+    response = Net::HTTP.get_response(uri)
     #TODO: check status
-    response = Net::HTTP.get(uri)
-    doc = Nokogiri::HTML response
+    raise "Status: #{response.code}" if response.code != '200'
+
+    doc = Nokogiri::HTML response.body
 
     attrs = {
         title: doc.xpath('/html/head/title').first.try(:content),
