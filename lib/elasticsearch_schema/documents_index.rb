@@ -5,7 +5,7 @@ module ElasticsearchSchema
         {
           html_document: {
             properties: {
-              html: { type: :string },
+              html: { type: :langdetect },
               url: { type: :string },
               host: { type: :string },
               title: { type: :string },
