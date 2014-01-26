@@ -1,8 +1,10 @@
 module ElasticsearchSchema
+  # TODO: подумать над рефакторингом
+
   class << self
     def create_indices
       BaseSearchRepository::POOL.with do |client|
-        client.indices.create index: :documents
+        client.indices.create index: :documents, body: { settings: ElasticsearchSchema::DocumentsIndex.settings }
       end
     end
 

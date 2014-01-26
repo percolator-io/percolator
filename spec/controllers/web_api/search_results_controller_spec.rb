@@ -5,11 +5,9 @@ describe WebApi::SearchResultsController do
   describe "GET 'index'" do
     before do
       url = 'http://example.com/page1'
-      attrs = {
-          url: url,
-          host: 'example.com',
-          html: 'some html',
-      }
+
+      attrs = generate :page_attrs
+      attrs.merge! url: url, host: 'example.com'
 
       id = IdGenerator.from_normalized_uri url
       repository = HtmlDocumentSearchRepository.new
