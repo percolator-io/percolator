@@ -23,6 +23,8 @@ gem 'simple_form'
 
 gem 'figaro'
 
+gem 'closure_tree'
+
 gem 'sinatra', require: false
 
 group :development, :test do
