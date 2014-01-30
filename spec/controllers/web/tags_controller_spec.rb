@@ -4,8 +4,6 @@ describe Web::TagsController do
   before do
     @tag = create :tag
     @attrs = attributes_for :tag
-
-    create :tag
   end
 
   it 'get index' do
@@ -21,10 +19,8 @@ describe Web::TagsController do
   it 'create a tag' do
     post :create, tag: @attrs
 
-    assert { response.status == 300 }
-
-    tag = Tag.find_by_name @attrs[:name]
-    assert tag
+    assert { response.status == 302 }
+    assert { Tag.exists?(name: @attrs[:name]) == true  }
   end
 
   it 'get edit' do
@@ -35,15 +31,15 @@ describe Web::TagsController do
   it 'update a tag' do
     put :update, id: @tag.id, tag: @attrs
 
-    assert { response.status == 300 }
+    assert { response.status == 302 }
     @tag.reload
-    assert_equal @attrs[:name], @tag.name
+    assert{ @tag.name == @attrs[:name] }
   end
 
   it 'destroy a tag' do
     delete :destroy, id: @tag.id
 
-    assert { response.status == 300 }
-    refute Tag.find_by_id(@tag.id)
+    assert { response.status == 302 }
+    assert { Tag.exists?(@tag.id) == false }
   end
 end

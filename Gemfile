@@ -36,6 +36,7 @@ group :test do
   gem 'wrong', github: 'pludoni/wrong'
   gem 'webmock'
   gem 'factory_girl_rails'
+  gem 'database_cleaner'
 end
 
 # Use ActiveModel has_secure_password

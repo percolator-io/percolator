@@ -25,17 +25,8 @@ ActiveRecord::Schema.define(version: 20140120192041) do
   add_index "tag_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "tag_anc_desc_udx", unique: true, using: :btree
   add_index "tag_hierarchies", ["descendant_id"], name: "tag_desc_idx", using: :btree
 
-  create_table "tag_translations", force: true do |t|
-    t.string   "title"
-    t.string   "lang"
-    t.integer  "tag_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "tag_translations", ["tag_id"], name: "index_tag_translations_on_tag_id", using: :btree
-
   create_table "tags", force: true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "parent_id"
