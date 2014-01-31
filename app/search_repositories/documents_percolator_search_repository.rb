@@ -1,6 +1,6 @@
 class DocumentsPercolatorSearchRepository < BaseSearchRepository
-  self.index = :documents
-  self.type = '.percolator'
+  index :documents
+  type '.percolator'
 
   def exists?(tag)
     POOL.with do |client|
@@ -10,6 +10,7 @@ class DocumentsPercolatorSearchRepository < BaseSearchRepository
 
   def store(tag)
     params = address.merge id: tag.id, body: tag_to_percolator(tag)
+
     POOL.with do |client|
       client.index params
     end

@@ -8,8 +8,7 @@ class TagObserver < ActiveRecord::Observer
   end
 
   def after_commit_on_save(tag)
-    repository = DocumentsPercolatorSearchRepository.new
-    repository.store tag
+    TagStoreWorker.perform_async tag.id
   end
 
   def after_commit_on_destroy(tag)

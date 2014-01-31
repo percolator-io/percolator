@@ -1,6 +1,6 @@
 class HtmlDocumentSearchRepository < BaseSearchRepository
-  self.index = :documents
-  self.type = :html_document
+  index :documents
+  type :html_document
 
   FIELDS = %i(title description keywords url host)
 
