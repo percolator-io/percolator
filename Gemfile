@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.2'
 
 gem 'pg'
+gem 'rails-observers'
 
 gem 'uglifier', '>= 1.3.0'
 gem 'therubyracer'
@@ -13,8 +14,10 @@ gem 'bootstrap-sass'
 gem 'react-rails'
 
 gem 'sidekiq'
+gem 'unicorn'
+
 gem 'addressable'
-gem 'elasticsearch'
+gem 'elasticsearch', github: 'elasticsearch/elasticsearch-ruby'
 gem 'virtus'
 gem 'hashie'
 gem 'mechanize'
@@ -37,6 +40,7 @@ group :test do
   gem 'webmock'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
+  gem 'test_after_commit'
 end
 
 # Use ActiveModel has_secure_password

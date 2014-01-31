@@ -18,7 +18,18 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
     end
 
     mash = Hashie::Mash.new results
-    mash.hits.hits.map{ |i| wrap_item i }
+    hits = mash.hits.hits
+
+    models = hits.map{ |i| wrap_item i }
+    ids = models.map &:id
+
+    tag_groups = mpercolate ids
+    tag_groups.each_with_index do |tags, index|
+      m = models[index]
+      m.tags = tags
+    end
+
+    models
   end
 
   def find!(id)
@@ -45,6 +56,25 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
     end
   end
 
+  def mpercolate(ids)
+    return [] if ids.empty?
+    body = []
+    ids.each do |id|
+      body << { percolate: address.merge(id: id) }
+      body << { }
+    end
+
+    responce = nil
+    POOL.with do |client|
+      responce = client.mpercolate body: body
+    end
+
+    # TODO: fix N+1
+    responce['responses'].map do |resp|
+      ids = resp.fetch('matches', []).map{ |m| m['_id'] }
+      Tag.find ids
+    end
+  end
 
 private
   def address

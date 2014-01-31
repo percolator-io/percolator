@@ -26,6 +26,12 @@ var ItemList = React.createClass({
 });
 
 var Item = React.createClass({
+  createTag: function(tag) {
+    return (
+      <li>{tag.name}</li>
+    );
+  },
+
   render: function() {
     return (
       <li className='media'>
@@ -34,8 +40,8 @@ var Item = React.createClass({
             <a href={this.props.url}>{this.props.title}</a>
           </h4>
           <p>{this.props.description}</p>
+          <ul className='list-inline'>{this.props.tags.map(this.createTag)}</ul>
         </div>
-
       </li>
     );
   }
