@@ -10,7 +10,7 @@ class Web::TagsController < ApplicationController
   def create
     @tag = Tag.new tag_params
     if @tag.save
-      redirect_to edit_tag_path(@tag)
+      redirect_to tags_path
     else
       render action: :new
     end
@@ -23,7 +23,7 @@ class Web::TagsController < ApplicationController
   def update
     @tag = Tag.find params[:id]
     if @tag.update tag_params
-      redirect_to edit_tag_path(@tag)
+      redirect_to tags_path
     else
       render action: :edit
     end
@@ -37,6 +37,6 @@ class Web::TagsController < ApplicationController
 
 private
   def tag_params
-    params.require(:tag).permit(:name)
+    params.require(:tag).permit(:name, :parent_id)
   end
 end

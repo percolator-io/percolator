@@ -1,0 +1,8 @@
+- if tree.any?
+  %ul
+    - tree.each do |tag, sub_tree|
+      %li
+        = tag.name
+        = link_to 'edit', edit_tag_path(tag)
+        = link_to 'delete', tag_path(tag), method: :delete
+        = render partial: 'tree', object: sub_tree
