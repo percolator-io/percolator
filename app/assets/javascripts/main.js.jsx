@@ -5,7 +5,7 @@ var SearchForm = React.createClass({
     return (
       <form onSubmit={this.props.handleSubmit}>
         <div className='form-group'>
-          <input onChange={this.props.onChange} className='form-control' />
+          <input onChange={this.props.onChange} className='form-control' value={this.props.query} />
         </div>
         <button className='btn btn-default'>Search</button>
       </form>
@@ -28,7 +28,11 @@ var ItemList = React.createClass({
 var Item = React.createClass({
   createTag: function(tag) {
     return (
-      <li>{tag.name}</li>
+      <li>
+        <a href={'#' + tag.name}>
+          {tag.name}
+        </a>
+      </li>
     );
   },
 
@@ -48,8 +52,26 @@ var Item = React.createClass({
 });
 
 var SearchApp = React.createClass({
+  getQuery: function() {
+    return window.location.hash.replace('#', '');
+  },
+
   getInitialState: function() {
-    return { items: [], query: '' };
+    return { items: [], query: this.getQuery() };
+  },
+
+  componentDidMount: function() {
+    this.fetchResults();
+    window.addEventListener('hashchange', this.handleHashChange);
+  },
+
+  componentWillUnmount: function() {
+    window.removeEventListener('hashchange', this.handleHashChange);
+  },
+
+  handleHashChange: function() {
+    this.setState({query: this.getQuery()});
+    this.fetchResults();
   },
 
   handleSubmit: function(e) {
@@ -75,7 +97,7 @@ var SearchApp = React.createClass({
 
     return (
       <div>
-        <SearchForm handleSubmit={this.handleSubmit} onChange={this.handleQueryChange}/>
+        <SearchForm query={this.state.query} handleSubmit={this.handleSubmit} onChange={this.handleQueryChange}/>
         <ItemList items={this.state.items} />
       </div>
     );
