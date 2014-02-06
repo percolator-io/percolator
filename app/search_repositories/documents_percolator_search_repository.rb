@@ -26,7 +26,7 @@ private
     {
         query: {
             match: {
-                _all: category.name
+                _all: category.keywords.join(' ')
             }
         }
     }

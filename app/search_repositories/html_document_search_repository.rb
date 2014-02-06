@@ -8,6 +8,8 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
     return [] if q.blank?
 
     results = nil
+
+    # анализатор для запросов - дефолтный и не все находится
     body = {
         query: { match: { _all: q } }
     }
