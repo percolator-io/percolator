@@ -37,6 +37,6 @@ class Web::CategoriesController < ApplicationController
 
 private
   def category_params
-    params.require(:category).permit(:name, :parent_id, tags: [])
+    params.require(:category).permit(:name, :parent_id, :tags)
   end
 end

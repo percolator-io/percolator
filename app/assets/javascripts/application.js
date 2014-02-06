@@ -13,4 +13,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require react
+//= require jquery.tagsinput
 //= require_tree .
+//= require_self
+
+$(function(){
+  $('input.tags').tagsInput();
+});
