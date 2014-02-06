@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20140120192041) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
-    t.string   "tags",       default: [], array: true
+    t.string   "keywords",   default: [], array: true
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "parent_id"
