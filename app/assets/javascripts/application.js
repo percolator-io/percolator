@@ -18,5 +18,7 @@
 //= require_self
 
 $(function(){
-  $('input.tags').tagsInput();
+  $('input.tags').tagsInput({
+    'width': '100%'
+  });
 });

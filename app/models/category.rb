@@ -1,4 +1,6 @@
 class Category < ActiveRecord::Base
+  validates :name, presence: true
+  # добавить валидацию на уикальность тегов
 
   acts_as_tree
 
