@@ -5,7 +5,7 @@ class HtmlDocument
   attribute :title
   attribute :description
   attribute :keywords, Array[String]
-  attribute :tags, Array[Tag]
+  attribute :categories, Array[Category]
 
   attribute :url
   attribute :host

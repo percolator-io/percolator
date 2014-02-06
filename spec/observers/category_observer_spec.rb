@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe TagObserver do
+describe CategoryObserver do
   it 'save in percolator' do
-    tag = create :tag
+    category = create :category
 
     repository = DocumentsPercolatorSearchRepository.new
-    assert { repository.exists? tag }
+    assert { repository.exists? category }
   end
 end

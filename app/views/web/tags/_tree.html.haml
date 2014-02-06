@@ -1,7 +1,0 @@
-- if tree.any?
-  %ul.tag-list
-    - tree.each do |tag, sub_tree|
-      %li
-        = tag.name
-        = link_to 'edit', edit_tag_path(tag)
-        = render partial: 'tree', object: sub_tree

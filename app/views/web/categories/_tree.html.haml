@@ -1,0 +1,7 @@
+- if tree.any?
+  %ul.category-list
+    - tree.each do |category, sub_tree|
+      %li
+        = category.name
+        = link_to 'edit', edit_category_path(category)
+        = render partial: 'tree', object: sub_tree

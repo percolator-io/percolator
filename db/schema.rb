@@ -16,20 +16,21 @@ ActiveRecord::Schema.define(version: 20140120192041) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "tag_hierarchies", id: false, force: true do |t|
+  create_table "categories", force: true do |t|
+    t.string   "name"
+    t.string   "tags",       default: [], array: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "parent_id"
+  end
+
+  create_table "category_hierarchies", id: false, force: true do |t|
     t.integer "ancestor_id",   null: false
     t.integer "descendant_id", null: false
     t.integer "generations",   null: false
   end
 
-  add_index "tag_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "tag_anc_desc_udx", unique: true, using: :btree
-  add_index "tag_hierarchies", ["descendant_id"], name: "tag_desc_idx", using: :btree
-
-  create_table "tags", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "parent_id"
-  end
+  add_index "category_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "tag_anc_desc_udx", unique: true, using: :btree
+  add_index "category_hierarchies", ["descendant_id"], name: "tag_desc_idx", using: :btree
 
 end

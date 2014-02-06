@@ -23,10 +23,10 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
     models = hits.map{ |i| wrap_item i }
     ids = models.map &:id
 
-    tag_groups = mpercolate ids
-    tag_groups.each_with_index do |tags, index|
+    category_groups = mpercolate ids
+    category_groups.each_with_index do |categories, index|
       m = models[index]
-      m.tags = tags
+      m.categories = categories
     end
 
     models
@@ -72,7 +72,7 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
     # TODO: fix N+1
     responce['responses'].map do |resp|
       ids = resp.fetch('matches', []).map{ |m| m['_id'] }
-      Tag.find ids
+      Category.find ids
     end
   end
 

@@ -26,11 +26,11 @@ var ItemList = React.createClass({
 });
 
 var Item = React.createClass({
-  createTag: function(tag) {
+  createCategory: function(category) {
     return (
       <li>
-        <a href={'#' + tag.name}>
-          {tag.name}
+        <a href={'#' + category.name}>
+          {category.name}
         </a>
       </li>
     );
@@ -44,7 +44,7 @@ var Item = React.createClass({
             <a href={this.props.url}>{this.props.title}</a>
           </h4>
           <p>{this.props.description}</p>
-          <ul className='list-inline'>{this.props.tags.map(this.createTag)}</ul>
+          <ul className='list-inline'>{this.props.categories.map(this.createCategory)}</ul>
         </div>
       </li>
     );

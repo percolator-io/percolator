@@ -2,7 +2,7 @@ Asearcher::Application.routes.draw do
 
   scope module: :web do
     root 'welcome#index'
-    resources :tags
+    resources :categories
   end
 
   namespace :web_api do

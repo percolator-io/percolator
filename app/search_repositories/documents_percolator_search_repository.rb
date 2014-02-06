@@ -2,14 +2,14 @@ class DocumentsPercolatorSearchRepository < BaseSearchRepository
   index :documents
   type '.percolator'
 
-  def exists?(tag)
+  def exists?(category)
     POOL.with do |client|
-      client.exists address.merge id: tag.id
+      client.exists address.merge id: category.id
     end
   end
 
-  def store(tag)
-    params = address.merge id: tag.id, body: tag_to_percolator(tag)
+  def store(category)
+    params = address.merge id: category.id, body: category_to_percolator(category)
 
     POOL.with do |client|
       client.index params
@@ -22,11 +22,11 @@ private
   end
 
   # TODO: вынести
-  def tag_to_percolator(tag)
+  def category_to_percolator(category)
     {
         query: {
             match: {
-                _all: tag.name
+                _all: category.name
             }
         }
     }
