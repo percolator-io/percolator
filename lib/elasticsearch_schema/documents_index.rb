@@ -10,15 +10,9 @@ module ElasticsearchSchema
             analyzer: {
               ru: {
                   type: :russian,
-                  char_filter: %i(html_strip)
               },
               en: {
                   type: :english,
-                  char_filter: %i(html_strip)
-              },
-              unknown: {
-                  type: :standard,
-                  char_filter: %i(html_strip)
               },
             }
           }
@@ -74,11 +68,11 @@ module ElasticsearchSchema
         {
           html_document: {
             _analyzer: {
-              path: 'html.lang'
+              path: 'content.lang'
             },
 
             properties: {
-              html: { type: :langdetect },
+              content: { type: :langdetect },
               url: { type: :string },
               host: { type: :string, index: :not_analyzed },
               title: { type: :string },

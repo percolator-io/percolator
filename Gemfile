@@ -21,6 +21,7 @@ gem 'elasticsearch', github: 'elasticsearch/elasticsearch-ruby'
 gem 'virtus'
 gem 'hashie'
 gem 'mechanize'
+gem "ruby-readability", require: 'readability'
 
 gem 'simple_form'
 

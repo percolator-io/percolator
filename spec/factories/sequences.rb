@@ -19,12 +19,20 @@ FactoryGirl.define do
     "domain-#{n}.ru"
   end
 
+  sequence :text do
+    <<-END
+      In publishing and graphic design, lorem ipsum is a placeholder text commonly used to demonstrate the graphic
+      elements of a document or visual presentation. By replacing the distraction of meaningful content with filler text
+      of scrambled Latin it allows viewers to focus on graphical elements such as font, typography, and layout.
+    END
+  end
+
   sequence :page_attrs do
     {
         title: FactoryGirl.generate(:string),
         description: FactoryGirl.generate(:string),
         keywords: ['keyword', FactoryGirl.generate(:string)].join(','),
-        body: FactoryGirl.generate(:string),
+        body: FactoryGirl.generate(:text),
     }
   end
 end

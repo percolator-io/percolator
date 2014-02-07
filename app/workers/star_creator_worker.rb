@@ -15,12 +15,11 @@ class StarCreatorWorker
     end
 
     #TODO: может проставить заголовки Accept, что бы page имел класс Mechanize::Page
-    a.get(uri) do |page|
-      attrs[:title] = page.title
-      attrs[:html] = page.search('/').inner_html
-      attrs[:description] = page.search('/html/head/meta[@name="description"]/@content').first.try(:value)
-      attrs[:keywords] = page.search('/html/head/meta[@name="keywords"]/@content').first.try(:value).try(:split, ',')
-    end
+    page = a.get(uri)
+    return unless page.kind_of? Mechanize::Page
+
+    extracted_attrs = ExtractionService.extract(page)
+    attrs.merge! extracted_attrs
 
     id = IdGenerator.from_normalized_uri uri
     repository = HtmlDocumentSearchRepository.new
