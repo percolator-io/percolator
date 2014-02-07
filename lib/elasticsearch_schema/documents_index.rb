@@ -5,63 +5,23 @@ module ElasticsearchSchema
         # возможно стоит посмотреть внимательее на
         # http://gibrown.wordpress.com/2013/05/01/three-principles-for-multilingal-indexing-in-elasticsearch/
 
+        with_standard_analyzer = %w(unknown af ar bg bn cs da de el es et fa fi fr gu he hi hr hu id it ja kn ko lt lv
+                                    mk ml mr ne nl no pa pl pt ro sk sl so sq sv sw ta te th tl tr uk ur vi zh-cn zh-tw)
+
+        analyzer = with_standard_analyzer.inject({}) do |memo, lang|
+          memo.merge lang => { type: :standard }
+        end
+
+        analyzer.merge!(
+          'ru' => { type: :russian },
+          'en' => { type: :english },
+        )
+
         {
           analysis: {
-            analyzer: {
-              ru: {
-                  type: :russian,
-              },
-              en: {
-                  type: :english,
-              },
-            }
+            analyzer: analyzer
           }
         }
-
-
-        #{
-        #  analysis: {
-        #    filter: {
-        #      en_stop_filter: {
-        #        type: "stop",
-        #        stopwords: ["_english_"]
-        #      },
-        #      en_stem_filter: {
-        #        type: "stemmer",
-        #        name: "minimal_english"
-        #      },
-        #      ru_stop_filter: {
-        #        type: "stop",
-        #        stopwords: ["_russian_"]
-        #      },
-        #      ru_stem_filter: {
-        #        type: "stemmer",
-        #        name: "light_russian"
-        #      },
-        #    },
-        #
-        #    analyzer: {
-        #      ru: {
-        #        type: :snowball,
-        #        tokenizer: :icu_tokenizer,
-        #        filter: %i(icu_folding icu_normalizer ru_stop_filter ru_stem_filter),
-        #        char_filter: %i(html_strip)
-        #      },
-        #      en: {
-        #        type: :custom,
-        #        tokenizer: :icu_tokenizer,
-        #        filter: %i(icu_folding icu_normalizer en_stop_filter en_stem_filter),
-        #        char_filter: %i(html_strip)
-        #      },
-        #      unknown: {
-        #        type: :custom,
-        #        tokenizer: :icu_tokenizer,
-        #        filter: %i(icu_folding icu_normalizer),
-        #        char_filter:%i(html_strip)
-        #      },
-        #    }
-        #  }
-        #}
       end
 
       def mappings
