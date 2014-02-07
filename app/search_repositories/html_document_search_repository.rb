@@ -11,7 +11,12 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
 
     # анализатор для запросов - дефолтный и не все находится
     body = {
-        query: { match: { _all: q } }
+        query: { match: { _all: q } },
+        highlight: {
+          fields: { content: {} },
+          pre_tags: ["<strong>"],
+          post_tags: ["</strong>"],
+        }
     }
     params = address.merge body: body, fields: FIELDS
 
@@ -89,6 +94,7 @@ private
         title: mash.fields.title.try(:first),
         description: mash.fields.description.try(:first),
         keywords: mash.fields.keywords,
+        highlight: mash.highlight.try(:content),
 
         url: mash.fields.url.first,
         host: mash.fields.host.first,
