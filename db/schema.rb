@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140120192041) do
+ActiveRecord::Schema.define(version: 20140202015826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,5 +32,22 @@ ActiveRecord::Schema.define(version: 20140120192041) do
 
   add_index "category_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "tag_anc_desc_udx", unique: true, using: :btree
   add_index "category_hierarchies", ["descendant_id"], name: "tag_desc_idx", using: :btree
+
+  create_table "user_github_accounts", force: true do |t|
+    t.integer  "user_id"
+    t.string   "uid"
+    t.text     "auth_hash"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_github_accounts", ["uid"], name: "index_user_github_accounts_on_uid", using: :btree
+  add_index "user_github_accounts", ["user_id"], name: "index_user_github_accounts_on_user_id", using: :btree
+
+  create_table "users", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

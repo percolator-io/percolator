@@ -1,4 +1,4 @@
-class Web::CategoriesController < ApplicationController
+class Web::CategoriesController < Web::ApplicationController
   def index
     @category_tree = Category.hash_tree
   end

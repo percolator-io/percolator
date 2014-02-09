@@ -23,6 +23,7 @@ end
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
+  config.include SessionTestHelper
 
   # ## Mock Framework
   #

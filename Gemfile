@@ -31,6 +31,8 @@ gem 'closure_tree'
 
 gem 'sinatra', require: false
 
+gem 'omniauth-github'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'spork-rails'

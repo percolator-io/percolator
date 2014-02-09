@@ -1,18 +1,14 @@
 FactoryGirl.define do
-  sequence :integer do |n|
+  sequence :n, aliases: %i(integer uid) do |n|
     n
   end
 
-  sequence :string do |n|
+  sequence :string, aliases: %i(name) do |n|
     "string-#{n}"
   end
 
   sequence :email do |n|
     "email_#{n}@mail.com"
-  end
-
-  sequence :name do |n|
-    "name-#{n}"
   end
 
   sequence :host do |n|
@@ -34,5 +30,12 @@ FactoryGirl.define do
         keywords: ['keyword', FactoryGirl.generate(:string)].join(','),
         body: FactoryGirl.generate(:text),
     }
+  end
+
+  sequence :github_auth do |n|
+    auth = OmniAuth::AuthHash.new
+    auth.uid = n.to_s
+    auth.info!.name = FactoryGirl.generate :string
+    auth
   end
 end

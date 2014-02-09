@@ -3,6 +3,13 @@ Asearcher::Application.routes.draw do
   scope module: :web do
     root 'welcome#index'
     resources :categories
+
+
+    namespace :auth do
+      resource :github, only: [] do
+        get :callback, on: :member
+      end
+    end
   end
 
   namespace :web_api do
