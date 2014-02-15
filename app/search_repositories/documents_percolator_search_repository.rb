@@ -23,11 +23,22 @@ private
 
   # TODO: вынести
   def category_to_percolator(category)
+    phrases = [category.name] | category.keywords
+    queries = phrases.map do |phrase|
+      {
+          match: {
+              _all: {
+                  query: phrase,
+                  type: 'phrase',
+              }
+          }
+      }
+    end
     {
         query: {
-            match: {
-                _all: category.keywords.join(' ')
-            }
+          bool: {
+            should: queries,
+          }
         }
     }
   end
