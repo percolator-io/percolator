@@ -11,7 +11,8 @@ describe WebApi::SearchResultsController do
 
       id = IdGenerator.from_normalized_uri url
       repository = HtmlDocumentSearchRepository.new
-      repository.store id, attrs
+      user = create :user
+      repository.store id, attrs, user.id
 
       sleep 1 #ждем индексацию эластика, может быть есть опция конфига
     end

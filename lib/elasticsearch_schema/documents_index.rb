@@ -46,6 +46,13 @@ module ElasticsearchSchema
               title: { type: :string },
               description: { type: :string },
               keywords: { type: :string, index: :not_analyzed },
+              stars: {
+                  type: :nested,
+                  properties: {
+                    user_id: { type: :integer },
+                    created_at: { type: :date },
+                  },
+              },
             }
           }
         }

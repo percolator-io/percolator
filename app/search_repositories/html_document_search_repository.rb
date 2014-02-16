@@ -2,7 +2,7 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
   index :documents
   type :html_document
 
-  FIELDS = %i(title description keywords url host)
+  FIELDS = %i(title description keywords url host stars)
 
   def search(q)
     return [] if q.blank?
@@ -10,6 +10,7 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
     results = nil
 
     body = {
+        _source: FIELDS,
         query: { match: { _all: q } },
         highlight: {
           fields: { content: {} },
@@ -17,7 +18,7 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
           post_tags: ["</strong>"],
         }
     }
-    params = address.merge body: body, fields: FIELDS
+    params = address.merge body: body
 
     POOL.with do |client|
       results = client.search params
@@ -40,7 +41,7 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
 
   def find!(id)
     result = nil
-    params = address.merge id: id, fields: FIELDS
+    params = address.merge id: id, _source: FIELDS
     POOL.with do |client|
       result = client.get params
     end
@@ -55,10 +56,32 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
     end
   end
 
-  def store(id, attrs)
-    params = address.merge id: id, body: attrs
+  def store(id, attrs, user_id)
+    star_created_at = DateTime.current
+    upsert = attrs.merge stars: [ { user_id: user_id, created_at: star_created_at } ]
+
+    s_params = { user_id: user_id, star_created_at: star_created_at, attrs: attrs }
+    script = <<-MVEL
+      s = ctx._source;
+      foreach (attr : attrs.entrySet())
+      {
+        s[attr.key] = attr.value;
+      }
+      new_star = ["user_id" : user_id, "created_at" : star_created_at];
+      stars = ($ in s.stars if $.user_id != user_id);
+      stars.add(new_star);
+      s.stars = stars;
+    MVEL
+
+    body = {
+        script: script,
+        params: s_params,
+        upsert: upsert,
+    }
+    params = address.merge id: id, body: body
+
     POOL.with do |client|
-      client.index params
+      client.update params
     end
   end
 
@@ -88,15 +111,18 @@ private
   end
 
   def wrap_item(mash)
+    s = mash._source
+
     attrs = {
         id: mash._id,
-        title: mash.fields.title.try(:first),
-        description: mash.fields.description.try(:first),
-        keywords: mash.fields.keywords,
+        title: s.title,
+        description: s.description,
+        keywords: s.keywords,
+        stars: s.stars,
         highlight: mash.highlight.try(:content),
 
-        url: mash.fields.url.first,
-        host: mash.fields.host.first,
+        url: s.url,
+        host: s.host,
     }
 
     HtmlDocument.new attrs
