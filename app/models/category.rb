@@ -1,7 +1,5 @@
 class Category < ActiveRecord::Base
   validates :name, presence: true
-  # добавить валидацию на уикальность keywords
-
   acts_as_tree
 
   def keywords=(arg)
@@ -11,6 +9,7 @@ class Category < ActiveRecord::Base
       else raise ArgumentError
     end
     array.sort!
+    array.uniq!
     super array
   end
 end
