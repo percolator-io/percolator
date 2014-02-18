@@ -36,12 +36,6 @@ var Item = React.createClass({
     );
   },
 
-  createHighlight: function(text) {
-    return (
-      <p dangerouslySetInnerHTML={{__html: text}} />
-      );
-  },
-
   render: function() {
     return (
       <li className='media'>
@@ -50,7 +44,6 @@ var Item = React.createClass({
             <a href={this.props.url}>{this.props.title}</a>
           </h4>
           <p>{this.props.description}</p>
-          <div>{this.props.highlight.map(this.createHighlight)}</div>
           <ul className='list-inline'>{this.props.categories.map(this.createCategory)}</ul>
         </div>
       </li>

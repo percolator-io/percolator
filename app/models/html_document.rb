@@ -15,6 +15,5 @@ class HtmlDocument
   attribute :description
   attribute :keywords, Array[String]
   attribute :categories, Array[Category]
-  attribute :highlight, Array[String]
   attribute :stars, Array[Star]
 end

@@ -11,12 +11,7 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
 
     body = {
         _source: FIELDS,
-        query: { match: { _all: q } },
-        highlight: {
-          fields: { content: {} },
-          pre_tags: ["<strong>"],
-          post_tags: ["</strong>"],
-        }
+        query: { match: { _all: q } }
     }
     params = address.merge body: body
 
@@ -111,20 +106,8 @@ private
   end
 
   def wrap_item(mash)
-    s = mash._source
-
-    attrs = {
-        id: mash._id,
-        title: s.title,
-        description: s.description,
-        keywords: s.keywords,
-        stars: s.stars,
-        highlight: mash.highlight.try(:content),
-
-        url: s.url,
-        host: s.host,
-    }
-
+    attrs = mash._source
+    attrs.id = mash._id
     HtmlDocument.new attrs
   end
 end
