@@ -2,8 +2,9 @@ class HtmlDocument
   class Star
     include Virtus.model
 
-    attribute :user_id
-    attribute :created_at
+    attribute :user_id, Integer
+    attribute :user, User
+    attribute :created_at, DateTime
   end
 
   include Virtus.model

@@ -36,6 +36,14 @@ var Item = React.createClass({
     );
   },
 
+  createStar: function(star) {
+    return (
+      <li>
+        {star.user.name}
+      </li>
+      );
+  },
+
   render: function() {
     return (
       <li className='media'>
@@ -45,6 +53,7 @@ var Item = React.createClass({
           </h4>
           <p>{this.props.description}</p>
           <ul className='list-inline'>{this.props.categories.map(this.createCategory)}</ul>
+          <ul className='list-inline'>{this.props.stars.map(this.createStar)}</ul>
         </div>
       </li>
     );

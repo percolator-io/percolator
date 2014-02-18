@@ -23,13 +23,8 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
     hits = mash.hits.hits
 
     models = hits.map{ |i| wrap_item i }
-    ids = models.map &:id
-
-    category_groups = mpercolate ids
-    category_groups.each_with_index do |categories, index|
-      m = models[index]
-      m.categories = categories
-    end
+    add_categories! models
+    add_users_to_stars! models
 
     models
   end
@@ -80,26 +75,6 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
     end
   end
 
-  def mpercolate(ids)
-    return [] if ids.empty?
-    body = []
-    ids.each do |id|
-      body << { percolate: address.merge(id: id) }
-      body << { }
-    end
-
-    responce = nil
-    POOL.with do |client|
-      responce = client.mpercolate body: body
-    end
-
-    # TODO: fix N+1
-    responce['responses'].map do |resp|
-      ids = resp.fetch('matches', []).map{ |m| m['_id'] }
-      Category.find ids
-    end
-  end
-
 private
   def address
     { index: self.class.index, type: self.class.type }
@@ -109,5 +84,56 @@ private
     attrs = mash._source
     attrs.id = mash._id
     HtmlDocument.new attrs
+  end
+
+  def add_categories!(models)
+    ids = models.map &:id
+    category_ids_groups = mpercolate ids
+    category_ids = category_ids_groups.inject(Set.new) do |set, category_ids|
+      set.merge category_ids
+    end
+
+    categories = Category.find category_ids.to_a
+    categories_hash = categories.inject({}){ |hash, c| hash.merge c.id => c }
+
+    category_ids_groups.each_with_index do |category_ids, index|
+      current_categories = category_ids.map{ |id| categories_hash[id] }
+      models[index].categories = current_categories
+    end
+  end
+
+  def mpercolate(documents_ids)
+    return [] if documents_ids.empty?
+    body = []
+    documents_ids.each do |id|
+      body << { percolate: address.merge(id: id) }
+      body << { }
+    end
+
+    responce = nil
+    POOL.with do |client|
+      responce = client.mpercolate body: body
+    end
+
+    responce['responses'].map do |resp|
+      resp.fetch('matches', []).map do |m|
+        m['_id'].to_i
+      end
+    end
+  end
+
+  def add_users_to_stars!(models)
+    ids = models.inject(Set.new) do |set, document|
+      user_ids = document.stars.map &:user_id
+      set.merge user_ids
+    end
+    users = User.find ids.to_a
+    users_map = users.inject({}){ |hash, user| hash.merge user.id => user }
+
+    models.each do |document|
+      document.stars.each do |star|
+        star.user = users_map[star.user_id]
+      end
+    end
   end
 end

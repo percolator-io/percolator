@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   validates :name, presence: true
 
-  after_initialize :set_api_token if :new_record?
+  after_initialize :set_api_token, if: :new_record?
 
   def guest?
     false
