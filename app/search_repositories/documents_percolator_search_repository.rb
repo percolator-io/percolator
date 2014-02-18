@@ -26,11 +26,10 @@ private
     phrases = [category.name] | category.keywords
     queries = phrases.map do |phrase|
       {
-          match: {
-              _all: {
-                  query: phrase,
-                  type: 'phrase',
-              }
+          multi_match: {
+            query: phrase,
+            type: 'phrase',
+            fields: %w(title description keywords host)
           }
       }
     end

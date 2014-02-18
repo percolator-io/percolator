@@ -11,6 +11,7 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
 
     body = {
         _source: FIELDS,
+        #TODO: use multi_match
         query: { match: { _all: q } }
     }
     params = address.merge body: body
