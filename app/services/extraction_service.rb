@@ -4,7 +4,9 @@ module ExtractionService
       attrs = {}
       attrs[:title] = page.title
       attrs[:description] = page.search('/html/head/meta[@name="description"]/@content').first.try(:value)
-      attrs[:keywords] = page.search('/html/head/meta[@name="keywords"]/@content').first.try(:value).try(:split, ',')
+
+      keywords = page.search('/html/head/meta[@name="keywords"]/@content').first.try(:value) || ''
+      attrs[:keywords] = keywords.split(',').map(&:strip)
 
       document = Readability::Document.new(page.content)
       sanitizer = HTML::FullSanitizer.new

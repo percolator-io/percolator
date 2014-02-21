@@ -29,7 +29,12 @@ module ElasticsearchSchema
               default: {
                 type: :custom,
                 tokenizer: 'icu_tokenizer',
-                filter: %w(icu_folding icu_normalizer ru_stop_filter ru_stem_filter en_stop_filter en_stem_filter),
+                filter: %w(lowercase icu_folding icu_normalizer ru_stop_filter ru_stem_filter en_stop_filter en_stem_filter),
+              },
+              keywords_analyzer: {
+                  type: :custom,
+                  tokenizer: 'icu_tokenizer',
+                  filter: %w(lowercase icu_folding icu_normalizer)
               }
             }
           }
@@ -40,12 +45,12 @@ module ElasticsearchSchema
         {
           html_document: {
             properties: {
-              content: { type: :string },
-              url: { type: :string },
-              host: { type: :string, index: :not_analyzed },
               title: { type: :string },
               description: { type: :string },
-              keywords: { type: :string, index: :not_analyzed },
+              keywords: { type: :string, analyzer: :keywords_analyzer },
+              content: { type: :string },
+              url: { type: :string, index: :not_analyzed },
+              host: { type: :string, index: :not_analyzed },
               stars: {
                   type: :nested,
                   properties: {

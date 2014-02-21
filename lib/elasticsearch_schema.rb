@@ -17,8 +17,16 @@ module ElasticsearchSchema
     def put_mappings
       BaseSearchRepository::POOL.with do |client|
         ElasticsearchSchema::DocumentsIndex.mappings.each do |type, mapping|
-          client.indices.put_mapping index: :documents, type: type, body: { type => mapping }
+          client.indices.put_mapping index: :documents, type: type, body: { type => mapping }, ignore_conflicts: true
         end
+      end
+    end
+
+    def put_settings
+      BaseSearchRepository::POOL.with do |client|
+        client.indices.close index: :documents
+        client.indices.put_settings index: :documents, body: ElasticsearchSchema::DocumentsIndex.settings
+        client.indices.open index: :documents
       end
     end
   end

@@ -11,6 +11,10 @@ namespace :elasticsearch do
     ElasticsearchSchema.put_mappings
   end
 
+  task put_settings: :environment do
+    ElasticsearchSchema.put_settings
+  end
+
   task recreate_indices: %i(remove_indicies create_indices)
   task reset: %i(recreate_indices put_mappings)
 end
