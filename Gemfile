@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.2'
+gem 'rails'
 
 gem 'pg'
 gem 'rails-observers'
@@ -17,7 +17,7 @@ gem 'sidekiq'
 gem 'unicorn'
 
 gem 'addressable'
-gem 'elasticsearch', github: 'elasticsearch/elasticsearch-ruby'
+gem 'elasticsearch'
 gem 'virtus'
 gem 'hashie'
 gem 'mechanize'
