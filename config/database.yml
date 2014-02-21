@@ -1,13 +1,15 @@
-development:
+setup: &setup
   adapter: postgresql
   encoding: unicode
-  database: project_development
   pool: 5
   username: postgres
+  host: localhost
+  port: 5432
+
+development:
+  <<: *setup
+  database: project_development
 
 test:
-  adapter: postgresql
-  encoding: unicode
+  <<: *setup
   database: project_test
-  pool: 5
-  username: postgres
