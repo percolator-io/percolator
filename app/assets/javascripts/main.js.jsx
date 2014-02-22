@@ -22,7 +22,7 @@ var ItemList = React.createClass({
 
   render: function(){
     return (
-      <ul className='media-list'>{this.props.items.map(this.createItem)}</ul>
+      <ul className='media-list search-result'>{this.props.items.map(this.createItem)}</ul>
     );
   }
 });
@@ -53,9 +53,8 @@ var Item = React.createClass({
           <h4 className="media-heading">
             <a href={this.props.url}>{this.props.title}</a>
           </h4>
-          <p>{this.props.description}</p>
+          <div>{this.props.description}</div>
           <ul className='list-inline'>{this.props.categories.map(this.createCategory)}</ul>
-          <ul className='list-inline'>{this.props.stars.map(this.createStar)}</ul>
         </div>
       </li>
     );
