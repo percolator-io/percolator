@@ -7,9 +7,11 @@ describe Api::V1::StarsController do
 
     @page_attrs = generate :page_attrs
     @page = HtmlPage.render @page_attrs
-    @user = create :user
     @stub = stub_request(:get, @url).to_return(status: 200, body: @page, headers: { "Content-Type" => 'text/html' })
-    @params = { star: { url: @url }, access_token: @user.api_token }
+
+    @user = create :user
+    access_token = create :access_token, resource_owner_id: @user.id
+    @params = { star: { url: @url }, access_token: access_token.token }
     @repository = HtmlDocumentSearchRepository.new
   end
 

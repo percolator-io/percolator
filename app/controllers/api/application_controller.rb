@@ -1,12 +1,8 @@
 class Api::ApplicationController < ApplicationController
-  include ApiAuthenticationHelper
-
-  before_filter :authenticate_user!
+  doorkeeper_for :all
 
 private
-  def authenticate_user!
-    return if signed_in?
-    head 401
-    false
+  def current_user
+    @current_user ||= User.find doorkeeper_token.resource_owner_id
   end
 end

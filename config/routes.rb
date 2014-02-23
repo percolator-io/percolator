@@ -1,5 +1,6 @@
 Asearcher::Application.routes.draw do
 
+  use_doorkeeper
   scope module: :web do
     root 'welcome#index'
     resources :categories

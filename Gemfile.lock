@@ -60,6 +60,8 @@ GEM
     diff-lcs (1.2.5)
     domain_name (0.5.16)
       unf (>= 0.0.5, < 1.0.0)
+    doorkeeper (1.0.0)
+      railties (>= 3.1)
     elasticsearch (1.0.0)
       elasticsearch-api (= 1.0.0)
       elasticsearch-transport (= 1.0.0)
@@ -268,6 +270,7 @@ DEPENDENCIES
   bootstrap-sass
   closure_tree
   database_cleaner
+  doorkeeper
   elasticsearch
   factory_girl_rails
   figaro

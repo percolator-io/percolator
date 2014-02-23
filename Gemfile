@@ -33,6 +33,8 @@ gem 'sinatra', require: false
 
 gem 'omniauth-github'
 
+gem 'doorkeeper'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'spork-rails'
