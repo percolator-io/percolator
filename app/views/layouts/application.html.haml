@@ -1,14 +1,14 @@
 !!!
 %html
   %head
-    %title Asearcher
+    %title Percolator
     = stylesheet_link_tag    "application", media: "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
     - if signed_in?
       %meta{name: 'api_token', content: current_user.api_token}
   %body
-    .navbar.navbar-inverse.navbar-fixed-top{role: "navigation"}
+    .navbar.navbar-default.navbar-static-top{role: "navigation"}
       .container
         .navbar-header
           %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", type: "button"}
@@ -16,11 +16,11 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          = link_to 'ASearcher', root_path, class: 'navbar-brand'
+          = link_to 'Percolator', root_path, class: 'navbar-brand'
         .collapse.navbar-collapse
           %ul.nav.navbar-nav.pull-right
             - if signed_in?
-              -#= current_user.name
+              %p.navbar-text= current_user.name
             - if signed_out?
               %li= link_to 'github', auth_github_cpath
 
