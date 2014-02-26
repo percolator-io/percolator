@@ -22,7 +22,6 @@ class StarCreatorWorker
     attrs.merge! extracted_attrs
 
     id = IdGenerator.from_normalized_uri uri
-    repository = HtmlDocumentSearchRepository.new
-    repository.store id, attrs, user_id
+    Elastic::HtmlDocument::StoreCommand.new(id, attrs, user_id).perform
   end
 end

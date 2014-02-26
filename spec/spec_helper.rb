@@ -63,17 +63,17 @@ RSpec.configure do |config|
   end
 
   config.before :all do
-    ElasticsearchSchema.remove_indicies
-    ElasticsearchSchema.create_indices
-    ElasticsearchSchema.put_mappings
+    Elastic::Indices.remove
+    Elastic::Indices.create
+    Elastic::Indices.put_mappings
   end
 
   config.after :each do
-    BaseSearchRepository.remove_all_documents
+    Elastic::Indices.clean
   end
 
   config.after :all do
-    ElasticsearchSchema.remove_indicies
+    Elastic::Indices.remove
   end
 end
 

@@ -4,7 +4,7 @@ describe CategoryObserver do
   it 'save in percolator' do
     category = create :category
 
-    repository = DocumentsPercolatorSearchRepository.new
-    assert { repository.exists? category }
+    result = Elastic::DocumentsPercolator::ExistsQuery.new(category.id).result
+    assert { result == true }
   end
 end

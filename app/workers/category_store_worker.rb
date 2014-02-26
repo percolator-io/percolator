@@ -3,7 +3,6 @@ class CategoryStoreWorker
 
   def perform(id)
     category = Category.find(id)
-    repository = DocumentsPercolatorSearchRepository.new
-    repository.store category
+    Elastic::DocumentsPercolator::StoreCommand.new(category).perform
   end
 end

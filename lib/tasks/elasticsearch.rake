@@ -1,18 +1,14 @@
 namespace :elasticsearch do
   task remove_indicies: :environment do
-    ElasticsearchSchema.remove_indicies
+    Elastic::Indices.remove
   end
 
   task create_indices: :environment do
-    ElasticsearchSchema.create_indices
+    Elastic::Indices.create
   end
 
   task put_mappings: :environment do
-    ElasticsearchSchema.put_mappings
-  end
-
-  task put_settings: :environment do
-    ElasticsearchSchema.put_settings
+    Elastic::Indices.put_mappings
   end
 
   task recreate_indices: %i(remove_indicies create_indices)

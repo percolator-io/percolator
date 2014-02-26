@@ -10,16 +10,17 @@ describe WebApi::SearchResultsController do
       attrs.merge! url: url, host: 'example.com'
 
       id = IdGenerator.from_normalized_uri url
-      repository = HtmlDocumentSearchRepository.new
       user = create :user
-      repository.store id, attrs, user.id
-
-      sleep 1 #ждем индексацию эластика, может быть есть опция конфига
+      Elastic::HtmlDocument::StoreCommand.new(id, attrs, user.id).perform(refresh: true)
     end
 
     it "returns http success" do
-      get :index, format: :json, q: 'html'
+      get :index, format: :json, q: 'lorem ipsum'
       assert { response.status == 200 }
+
+      json = JSON.parse(response.body)
+      assert { json['html_documents'].one? == true }
+      assert { json['meta'].any? == true }
     end
   end
 end

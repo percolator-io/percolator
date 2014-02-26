@@ -1,7 +1,7 @@
 class WebApi::SearchResultsController < WebApi::ApplicationController
   def index
-    repository = HtmlDocumentSearchRepository.new
-    documents = repository.search params[:q]
+    query = Elastic::HtmlDocument::WideSearchQuery.new(params[:q])
+    documents = query.result
     render json: documents, root: :html_documents
   end
 end
