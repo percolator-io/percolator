@@ -8,11 +8,21 @@ module Elastic
       end
 
       def result
-        q = {
-            query: { match: { _all: phrase } }
-        }
-
+       q = phrase.present? ? query : match_all
         search q
+      end
+
+    private
+      def match_all
+        {
+            query: {
+                match_all: {}
+            }
+        }
+      end
+
+      def query
+        { query: { match: { _all: phrase } } }
       end
     end
   end
