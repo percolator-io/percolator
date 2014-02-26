@@ -27,7 +27,7 @@ class HtmlDocumentSearchRepository < BaseSearchRepository
     add_categories! models
     add_users_to_stars! models
 
-    models
+    Elastic::Collection.new models, mash.hits.total
   end
 
   def find!(id)

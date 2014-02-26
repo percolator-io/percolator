@@ -1,13 +1,13 @@
 class HtmlDocument
   class Star
-    include Virtus.model
+    include Elastic::ModelMixin
 
     attribute :user_id, Integer
     attribute :user, User
     attribute :created_at, DateTime
   end
 
-  include Virtus.model
+  include Elastic::ModelMixin
 
   attribute :id
   attribute :url
@@ -17,4 +17,5 @@ class HtmlDocument
   attribute :keywords, Array[String]
   attribute :categories, Array[Category]
   attribute :stars, Array[Star]
+
 end

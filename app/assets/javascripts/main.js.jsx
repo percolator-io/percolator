@@ -96,7 +96,7 @@ var SearchApp = React.createClass({
   fetchResults: function(){
     var self = this;
     $.get('/web_api/search_results.json?q=' + this.state.query, function(data){
-      self.setState({items: data});
+      self.setState({items: data.html_documents});
     });
   },
 
