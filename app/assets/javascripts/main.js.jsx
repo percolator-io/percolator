@@ -61,13 +61,30 @@ var Item = React.createClass({
   }
 });
 
+var MoreButton = React.createClass({
+  button: function(){
+    return <button type="button" className="btn btn-default btn-block" onClick={this.props.handler}>Get more</button>;
+  },
+
+  fallback: function(){
+    return <span/>;
+  },
+
+  render: function(){
+    if (this.props.active) {
+      return this.button();
+    }
+    return this.fallback();
+  }
+});
+
 var SearchApp = React.createClass({
   getQuery: function() {
     return window.location.hash.replace('#', '');
   },
 
   getInitialState: function() {
-    return { items: [], query: this.getQuery() };
+    return { items: [], total_count: 0, query: this.getQuery() };
   },
 
   componentDidMount: function() {
@@ -96,8 +113,24 @@ var SearchApp = React.createClass({
   fetchResults: function(){
     var self = this;
     $.get('/web_api/search_results.json?q=' + this.state.query, function(data){
-      self.setState({items: data.html_documents});
+      self.setState({items: data.html_documents, total_count: data.meta.total_count});
     });
+  },
+
+  loadMore: function(){
+    if (this.isAllFetched()) {
+      return;
+    }
+
+    var self = this;
+    $.get('/web_api/search_results.json?q=' + this.state.query + '&' + 'offset=' + this.state.items.length, function(data){
+      var items = self.state.items.concat(data.html_documents);
+      self.setState({items: items});
+    });
+  },
+
+  isAllFetched: function(){
+    return this.state.items.length == this.state.total_count
   },
 
   render: function(){
@@ -109,6 +142,7 @@ var SearchApp = React.createClass({
       <div>
         <SearchForm query={this.state.query} handleSubmit={this.handleSubmit} onChange={this.handleQueryChange}/>
         <ItemList items={this.state.items} />
+        <MoreButton handler={this.loadMore} active={! this.isAllFetched()}/>
       </div>
     );
   }

@@ -1,10 +1,11 @@
 module Elastic
   module HtmlDocument
     class WideSearchQuery < BaseQuery
-      attr_accessor :phrase
+      attr_accessor :phrase, :offset
 
-      def initialize(phrase)
+      def initialize(phrase, offset = nil)
         @phrase = phrase
+        @offset = offset || 0
       end
 
       def result
@@ -15,14 +16,16 @@ module Elastic
     private
       def match_all
         {
-            query: {
-                match_all: {}
-            }
+            from: offset,
+            query: { match_all: {} }
         }
       end
 
       def query
-        { query: { match: { _all: phrase } } }
+        {
+            from: offset,
+            query: { match: { _all: phrase } }
+        }
       end
     end
   end
