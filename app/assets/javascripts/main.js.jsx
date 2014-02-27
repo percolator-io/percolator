@@ -112,7 +112,7 @@ var SearchApp = React.createClass({
 
   fetchResults: function(){
     var self = this;
-    $.get('/web_api/search_results.json?q=' + this.state.query, function(data){
+    this.getDocuments(function(data){
       self.setState({items: data.html_documents, total_count: data.meta.total_count});
     });
   },
@@ -123,10 +123,15 @@ var SearchApp = React.createClass({
     }
 
     var self = this;
-    $.get('/web_api/search_results.json?q=' + this.state.query + '&' + 'offset=' + this.state.items.length, function(data){
+    this.getDocuments(function(data){
       var items = self.state.items.concat(data.html_documents);
       self.setState({items: items});
     });
+  },
+
+  getDocuments: function(callback){
+    var url = Routes.web_api_html_documents_path({q: this.state.query, offset: this.state.items.length});
+    $.get(url, callback);
   },
 
   isAllFetched: function(){
