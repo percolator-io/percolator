@@ -1,83 +1,5 @@
 /** @jsx React.DOM */
 
-var SearchForm = React.createClass({
-  render: function() {
-    return (
-      <div className='search-form'>
-        <form onSubmit={this.props.handleSubmit}>
-          <div className='form-group'>
-            <input onChange={this.props.onChange} className='form-control' value={this.props.query} />
-          </div>
-          <button className='btn btn-default'>Search</button>
-        </form>
-      </div>
-    );
-  }
-});
-
-var ItemList = React.createClass({
-  createItem: function(item) {
-    return Item(item);
-  },
-
-  render: function(){
-    return (
-      <ul className='media-list search-result'>{this.props.items.map(this.createItem)}</ul>
-    );
-  }
-});
-
-var Item = React.createClass({
-  createCategory: function(category) {
-    return (
-      <li>
-        <a href={'#' + category.name}>
-          {category.name}
-        </a>
-      </li>
-    );
-  },
-
-  createStar: function(star) {
-    return (
-      <li>
-        {star.user.name}
-      </li>
-      );
-  },
-
-  render: function() {
-    return (
-      <li className='media'>
-        <div className="media-body">
-          <h4 className="media-heading">
-            <a href={this.props.url}>{this.props.title}</a>
-          </h4>
-          <div>{this.props.description}</div>
-          <ul className='list-inline'>{this.props.categories.map(this.createCategory)}</ul>
-        </div>
-      </li>
-    );
-  }
-});
-
-var MoreButton = React.createClass({
-  button: function(){
-    return <button type="button" className="btn btn-default btn-block" onClick={this.props.handler}>Get more</button>;
-  },
-
-  fallback: function(){
-    return <span/>;
-  },
-
-  render: function(){
-    if (this.props.active) {
-      return this.button();
-    }
-    return this.fallback();
-  }
-});
-
 var SearchApp = React.createClass({
   getQuery: function() {
     return window.location.hash.replace('#', '');
@@ -152,8 +74,3 @@ var SearchApp = React.createClass({
     );
   }
 });
-
-window.onload = function() {
-  var mountNode = document.getElementById("react-area");
-  React.renderComponent(SearchApp({}), mountNode);
-};
