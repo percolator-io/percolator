@@ -12,6 +12,7 @@ gem 'sass-rails', '>= 3.2'
 gem 'haml'
 gem 'bootstrap-sass'
 gem 'react-rails'
+gem 'js-routes'
 
 gem 'sidekiq'
 gem 'unicorn'
