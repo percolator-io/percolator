@@ -15,6 +15,7 @@
 //= require react
 //= require jquery.tagsinput
 //= require js-routes
+//= require bootstrap
 //= require_tree .
 //= require_self
 

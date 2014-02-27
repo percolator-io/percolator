@@ -6,7 +6,7 @@ var SearchApp = React.createClass({
   },
 
   getInitialState: function() {
-    return { items: [], total_count: 0, query: this.getQuery() };
+    return { items: [], total_count: 0, query: this.getQuery(), scope: 'all' };
   },
 
   componentDidMount: function() {
@@ -69,7 +69,10 @@ var SearchApp = React.createClass({
 
     return (
       <div>
-        <SearchForm query={this.state.query} handleSubmit={this.handleSubmit} onChange={this.handleQueryChange}/>
+        <SearchForm query={this.state.query}
+                    scopeName={this.state.scope}
+                    handleSubmit={this.handleSubmit}
+                    onChange={this.handleQueryChange}/>
         <ItemList items={this.state.items} />
         <MoreButton handler={this.loadMore} active={! this.isAllFetched()}/>
       </div>
