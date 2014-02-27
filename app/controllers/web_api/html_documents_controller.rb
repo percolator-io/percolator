@@ -1,4 +1,4 @@
-class WebApi::SearchResultsController < WebApi::ApplicationController
+class WebApi::HtmlDocumentsController < WebApi::ApplicationController
   def index
     query = Elastic::HtmlDocument::WideSearchQuery.new(params[:q], params[:offset])
     documents = query.result
