@@ -34,8 +34,10 @@ var SearchApp = React.createClass({
 
   fetchResults: function(){
     var self = this;
-    this.getDocuments(function(data){
-      self.setState({items: data.html_documents, total_count: data.meta.total_count});
+    this.setState({items: [], total_count: 0}, function(){
+      this.getDocuments(function(data){
+        self.setState({items: data.html_documents, total_count: data.meta.total_count});
+      });
     });
   },
 
