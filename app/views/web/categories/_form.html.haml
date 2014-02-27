@@ -1,5 +1,5 @@
 = simple_form_for @category do |f|
   = f.input :name
-  = f.association :parent
+  = f.association :parent, collection: categories_for_select
   = f.input :keywords, as: :tags
   = f.submit class: 'btn btn-primary'
