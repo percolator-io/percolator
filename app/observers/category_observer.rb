@@ -8,10 +8,10 @@ class CategoryObserver < ActiveRecord::Observer
   end
 
   def after_commit_on_create_or_update(category)
-    CategoryStoreWorker.perform_async category.id
+    Elastic::DocumentsPercolator::StoreCommand.new(category).perform
   end
 
   def after_commit_on_destroy(category)
-
+    Elastic::DocumentsPercolator::DeleteCommand.new(category).perform
   end
 end

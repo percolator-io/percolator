@@ -1,15 +1,16 @@
 module Elastic
   module DocumentsPercolator
 
-    class ExistsQuery < Operation
+    class DeleteCommand < Operation
       attr_reader :category
 
       def initialize(category)
         @category = category
       end
 
-      def result
-        POOL.with { |client| client.exists address.merge id: category.id }
+      def perform
+        params = address.merge id: category.id
+        POOL.with { |client| client.delete params }
       end
     end
 
