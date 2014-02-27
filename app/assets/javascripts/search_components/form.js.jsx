@@ -8,7 +8,7 @@ var SearchForm = React.createClass({
           <div className='form-group'>
             <input onChange={this.props.onChange} className='form-control' value={this.props.query} />
           </div>
-          <button className='btn btn-default'>Search</button>
+          <input type='submit' value='Search' className='btn btn-default'/>
         </form>
       </div>
      );
