@@ -2,7 +2,7 @@ module ExtractionService
   class << self
     def extract(page)
       {
-          title:  page.title,
+          title:  title(page),
           description: description(page),
           keywords: keywords(page),
           content: content(page),
@@ -10,6 +10,10 @@ module ExtractionService
     end
 
   private
+    def title(page)
+      page.title.strip
+    end
+
     def description(page)
       max_length = 160
       descr = page.search('/html/head/meta[@name="description"]/@content').first.try(:value) || ''
