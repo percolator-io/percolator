@@ -9,7 +9,7 @@ module Elastic
       end
 
       def result
-       q = phrase.present? ? query : match_all
+        q = phrase.present? ? query : match_all
         search q
       end
 

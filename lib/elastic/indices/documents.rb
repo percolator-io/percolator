@@ -31,7 +31,7 @@ module Elastic
                 default: {
                   type: :custom,
                   tokenizer: 'icu_tokenizer',
-                  filter: %w(lowercase icu_folding icu_normalizer ru_stop_filter ru_stem_filter en_stop_filter en_stem_filter),
+                  filter: %w(lowercase icu_folding icu_normalizer ru_stop_filter russian_morphology en_stop_filter english_morphology),
                 },
                 keywords_analyzer: {
                     type: :custom,

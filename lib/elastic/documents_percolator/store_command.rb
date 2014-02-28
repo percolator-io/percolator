@@ -15,22 +15,13 @@ module Elastic
 
     private
       def attributes
-        phrases = [category.name] | category.keywords
-        queries = phrases.map do |phrase|
-          {
-              multi_match: {
-                  query: phrase,
-                  type: 'phrase',
-                  fields: %w(title description keywords host)
-              }
-          }
-        end
         {
-            query: {
-                bool: {
-                    should: queries
-                }
+          query: {
+            query_string: {
+              query: category.query,
+              fields: %w(title description keywords host),
             }
+          }
         }
       end
     end

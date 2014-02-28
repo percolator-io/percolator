@@ -13,14 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require react
-//= require jquery.tagsinput
 //= require js-routes
 //= require bootstrap
 //= require_tree .
 //= require_self
-
-$(function(){
-  $('input.tags').tagsInput({
-    'width': '100%'
-  });
-});

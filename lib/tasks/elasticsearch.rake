@@ -13,4 +13,10 @@ namespace :elasticsearch do
 
   task recreate_indices: %i(remove_indicies create_indices)
   task reset: %i(recreate_indices put_mappings)
+
+  task reindex_categories: :environment do
+    Category.find_each do |category|
+      Elastic::DocumentsPercolator::StoreCommand.new(category).perform
+    end
+  end
 end
