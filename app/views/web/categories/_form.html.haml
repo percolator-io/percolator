@@ -3,3 +3,4 @@
   = f.association :parent, collection: categories_for_select
   = f.input :keywords, as: :tags
   = f.submit class: 'btn btn-primary'
+  = link_to 'Back', categories_path, class: 'btn btn-default'
