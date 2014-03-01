@@ -14,6 +14,7 @@ module Elastic
       end
 
     private
+      #TODO: избавиться от дублирования
       def attributes
         {
           query: {

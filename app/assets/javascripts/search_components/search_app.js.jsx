@@ -1,14 +1,14 @@
 /** @jsx React.DOM */
 
 var SearchApp = React.createClass({
-  getScopeId: function() {
+  getScope: function() {
     var id = window.location.hash.replace('#', '');
     if (/category_(\d+)/.test(id)) { return id; }
     return 'all';
   },
 
   getInitialState: function() {
-    return { items: [], total_count: 0, query: '', scopeId: this.getScopeId() };
+    return { items: [], total_count: 0, query: '', scope: this.getScope() };
   },
 
   componentDidMount: function() {
@@ -21,7 +21,7 @@ var SearchApp = React.createClass({
   },
 
   handleHashChange: function() {
-    this.setState({scopeId: this.getScopeId()});
+    this.setState({scope: this.getScope()});
     this.fetchResults();
   },
 
@@ -56,7 +56,11 @@ var SearchApp = React.createClass({
   },
 
   getDocuments: function(callback){
-    var url = Routes.web_api_html_documents_path({q: this.state.query, offset: this.state.items.length});
+    var url = Routes.web_api_html_documents_path({
+      q: this.state.query,
+      scope: this.state.scope,
+      offset: this.state.items.length
+    });
     $.get(url, callback);
   },
 
@@ -72,7 +76,7 @@ var SearchApp = React.createClass({
     return (
       <div>
         <SearchForm query={this.state.query}
-                    scopeId={this.state.scopeId}
+                    scope={this.state.scope}
                     handleSubmit={this.handleSubmit}
                     onChange={this.handleQueryChange}/>
         <ItemList items={this.state.items} />
