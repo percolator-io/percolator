@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+
 require 'rubygems'
 require 'spork'
 #uncomment the following line to use spork with the debugger
@@ -22,6 +25,7 @@ Spork.prefork do
 end
 
 RSpec.configure do |config|
+  config.render_views
   config.include FactoryGirl::Syntax::Methods
   config.include SessionTestHelper
 
