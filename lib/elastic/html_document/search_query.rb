@@ -40,8 +40,9 @@ module Elastic
 
       def scope_filter
         filter = case scope
-        when /category_(\d+)/ then category_filter($1)
+        when /category_(\d+)/ then category_filter(Category.find_by id: $1)
         when 'stars' then stars_filter
+        when 'selected' then selected_filter
         else match_all_filter
         end
         {
@@ -56,13 +57,13 @@ module Elastic
       def sort
         case scope
         when 'stars' then user_star_sort
-        else first_star_sort
+        when 'selected' then first_star_sort
+        else last_star_sort
         end
       end
 
       #TODO: избавиться от дублирования
-      def category_filter(category_id)
-        category = Category.find_by id: category_id
+      def category_filter(category)
         {
           query: {
             query_string: {
@@ -70,6 +71,17 @@ module Elastic
               fields: %w(title description keywords host),
             }
           }
+        }
+      end
+
+      def selected_filter
+        must = user.selected_categories.map{ |c| category_filter c }
+        must_not = user.excluded_categories.map{ |c| category_filter c }
+        {
+            bool: {
+              must: must,
+              must_not: must_not
+            }
         }
       end
 

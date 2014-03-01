@@ -4,7 +4,7 @@ var SearchApp = React.createClass({
   getScope: function() {
     var scope = window.location.hash.replace('#', '');
     if (/category_(\d+)/.test(scope)) { return scope; }
-    if (/(stars)/.test(scope)) { return scope; }
+    if (/(stars|selected)/.test(scope)) { return scope; }
     return 'all';
   },
 

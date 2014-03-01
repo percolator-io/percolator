@@ -9,5 +9,5 @@ class CategorySelection < ActiveRecord::Base
   validates :category_id, uniqueness: { scope: :user_id }
   validates :kind, presence: true
 
-  enumerize :kind, in: { selected: 1, excluded: 2 }, default: :selected
+  enumerize :kind, in: { selected: 1, excluded: 2 }, default: :selected, scope: true
 end

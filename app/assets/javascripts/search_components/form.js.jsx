@@ -11,7 +11,7 @@ var SearchForm = React.createClass({
     }
     if (scope == 'all') { return 'All' }
     if (scope == 'stars') { return 'Stars' }
-//    if (id == 'favorites') { return 'Favorites' }
+    if (scope == 'selected') { return 'Selected' }
     return 'No name'
   },
 
@@ -34,6 +34,7 @@ var SearchForm = React.createClass({
               </button>
               <ul className="dropdown-menu pull-right">
                 <li><a href={'#all'}>{this.scopeName('all')}</a></li>
+                <li><a href={'#selected'}>{this.scopeName('selected')}</a></li>
                 <li><a href={'#stars'}>{this.scopeName('stars')}</a></li>
                 <li className="divider"></li>
                 {this.categories()}
