@@ -1,0 +1,8 @@
+= simple_form_for current_user, url: account_category_selection_path do |f|
+  #category_selections
+    = f.simple_fields_for :category_selections do |category_selection|
+      = render 'category_selection_fields', f: category_selection
+    .form-group
+      = link_to_add_association 'add', f, :category_selections, class: 'btn btn-success'
+  .form-group
+    = f.submit class: 'btn btn-primary'

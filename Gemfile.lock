@@ -53,6 +53,7 @@ GEM
     closure_tree (4.4.0)
       activerecord (>= 3.0.0)
       with_advisory_lock (>= 0.0.9)
+    cocoon (1.2.5)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     connection_pool (1.2.0)
@@ -73,6 +74,8 @@ GEM
     elasticsearch-transport (1.0.0)
       faraday
       multi_json
+    enumerize (0.7.0)
+      activesupport (>= 3.2)
     equalizer (0.0.9)
     erubis (2.7.0)
     execjs (2.0.2)
@@ -277,9 +280,11 @@ DEPENDENCIES
   addressable
   bootstrap-sass
   closure_tree
+  cocoon
   database_cleaner
   doorkeeper
   elasticsearch
+  enumerize
   factory_girl_rails
   figaro
   haml

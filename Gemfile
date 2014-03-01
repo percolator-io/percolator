@@ -28,10 +28,12 @@ gem 'mechanize'
 gem "ruby-readability", require: 'readability'
 
 gem 'simple_form'
+gem 'cocoon'
 
 gem 'figaro'
 
 gem 'closure_tree'
+gem 'enumerize'
 
 gem 'sinatra', require: false
 

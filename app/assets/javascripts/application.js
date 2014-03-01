@@ -16,5 +16,6 @@
 //= require js-routes
 //= require bootstrap
 //= require underscore
+//= require cocoon
 //= require_tree .
 //= require_self

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140228170454) do
+ActiveRecord::Schema.define(version: 20140301182255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,18 @@ ActiveRecord::Schema.define(version: 20140228170454) do
 
   add_index "category_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "tag_anc_desc_udx", unique: true, using: :btree
   add_index "category_hierarchies", ["descendant_id"], name: "tag_desc_idx", using: :btree
+
+  create_table "category_selections", force: true do |t|
+    t.integer  "category_id"
+    t.integer  "user_id"
+    t.integer  "kind"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "category_selections", ["category_id"], name: "index_category_selections_on_category_id", using: :btree
+  add_index "category_selections", ["user_id", "category_id"], name: "index_category_selections_on_user_id_and_category_id", unique: true, using: :btree
+  add_index "category_selections", ["user_id"], name: "index_category_selections_on_user_id", using: :btree
 
   create_table "oauth_access_grants", force: true do |t|
     t.integer  "resource_owner_id", null: false

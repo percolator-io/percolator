@@ -20,7 +20,11 @@
         .collapse.navbar-collapse
           %ul.nav.navbar-nav.pull-right
             - if signed_in?
-              %p.navbar-text= current_user.name
+              %li= link_to 'select categories', edit_account_category_selection_path
+              %li
+                %p.navbar-text
+                  %span.glyphicon.glyphicon-user
+                  = current_user.name
             - if signed_out?
               %li= link_to 'github', auth_github_cpath
 

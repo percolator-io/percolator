@@ -24,4 +24,8 @@ module WebAuthenticationHelper
   def current_user
     @current_user ||= User.find_by(id: session[:user_id]) || User::Guest.new
   end
+
+  def authenticate_user!
+    redirect_to root_path unless signed_in?
+  end
 end

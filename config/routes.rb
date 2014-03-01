@@ -5,6 +5,9 @@ Asearcher::Application.routes.draw do
     root 'welcome#index'
     resources :categories
 
+    namespace :account do
+      resource :category_selection
+    end
 
     namespace :auth do
       resource :github, only: [] do
