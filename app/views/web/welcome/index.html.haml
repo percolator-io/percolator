@@ -1,6 +1,4 @@
 #react-area
 
 :javascript
-  window.categories = #{categories_for_select.to_json}
-
-
+  window.categories = #{categories_for_select.map{ |c| {id: c[1], name: c[0]} }.to_json}

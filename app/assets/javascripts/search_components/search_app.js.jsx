@@ -6,7 +6,7 @@ var SearchApp = React.createClass({
   },
 
   getInitialState: function() {
-    return { items: [], total_count: 0, query: this.getQuery(), scope: 'all' };
+    return { items: [], total_count: 0, query: this.getQuery(), scopeId: 'all' };
   },
 
   componentDidMount: function() {
@@ -62,6 +62,10 @@ var SearchApp = React.createClass({
     return this.state.items.length == this.state.total_count
   },
 
+  onScopeSelect: function(id){
+    this.setState({scopeId: id});
+  },
+
   render: function(){
     var createItem = function(item) {
       return <li>{item.id}</li>;
@@ -70,9 +74,10 @@ var SearchApp = React.createClass({
     return (
       <div>
         <SearchForm query={this.state.query}
-                    scopeName={this.state.scope}
+                    scopeId={this.state.scopeId}
                     handleSubmit={this.handleSubmit}
-                    onChange={this.handleQueryChange}/>
+                    onChange={this.handleQueryChange}
+                    onScopeSelect={this.onScopeSelect}/>
         <ItemList items={this.state.items} />
         <MoreButton handler={this.loadMore} active={! this.isAllFetched()}/>
       </div>

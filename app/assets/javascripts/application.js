@@ -15,5 +15,6 @@
 //= require react
 //= require js-routes
 //= require bootstrap
+//= require underscore
 //= require_tree .
 //= require_self

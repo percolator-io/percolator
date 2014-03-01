@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+source 'https://rails-assets.org'
 
 gem 'rails'
 
@@ -13,6 +14,7 @@ gem 'haml'
 gem 'bootstrap-sass'
 gem 'react-rails'
 gem 'js-routes'
+gem 'rails-assets-underscore'
 
 gem 'sidekiq'
 gem 'unicorn'
