@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title Percolator
+    %title Percolator.io
     = stylesheet_link_tag    "application", media: "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
@@ -16,7 +16,7 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          = link_to 'Percolator', root_path, class: 'navbar-brand'
+          = link_to 'Percolator.io', root_path, class: 'navbar-brand'
         .collapse.navbar-collapse
           %ul.nav.navbar-nav.pull-right
             - if signed_in?
