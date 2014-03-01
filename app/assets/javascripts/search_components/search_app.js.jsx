@@ -1,12 +1,14 @@
 /** @jsx React.DOM */
 
 var SearchApp = React.createClass({
-  getQuery: function() {
-    return window.location.hash.replace('#', '');
+  getScopeId: function() {
+    var id = window.location.hash.replace('#', '');
+    if (/category_(\d+)/.test(id)) { return id; }
+    return 'all';
   },
 
   getInitialState: function() {
-    return { items: [], total_count: 0, query: this.getQuery(), scopeId: 'all' };
+    return { items: [], total_count: 0, query: '', scopeId: this.getScopeId() };
   },
 
   componentDidMount: function() {
@@ -19,7 +21,7 @@ var SearchApp = React.createClass({
   },
 
   handleHashChange: function() {
-    this.setState({query: this.getQuery()});
+    this.setState({scopeId: this.getScopeId()});
     this.fetchResults();
   },
 
@@ -62,10 +64,6 @@ var SearchApp = React.createClass({
     return this.state.items.length == this.state.total_count
   },
 
-  onScopeSelect: function(id){
-    this.setState({scopeId: id});
-  },
-
   render: function(){
     var createItem = function(item) {
       return <li>{item.id}</li>;
@@ -76,8 +74,7 @@ var SearchApp = React.createClass({
         <SearchForm query={this.state.query}
                     scopeId={this.state.scopeId}
                     handleSubmit={this.handleSubmit}
-                    onChange={this.handleQueryChange}
-                    onScopeSelect={this.onScopeSelect}/>
+                    onChange={this.handleQueryChange}/>
         <ItemList items={this.state.items} />
         <MoreButton handler={this.loadMore} active={! this.isAllFetched()}/>
       </div>

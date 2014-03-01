@@ -10,25 +10,13 @@ var SearchForm = React.createClass({
       return category.name;
     }
     if (id == 'all') { return 'All' }
-    if (id == 'favorites') { return 'Favorites' }
+//    if (id == 'favorites') { return 'Favorites' }
     return 'No name'
-  },
-
-  categoryOnClick: function(id){
-    this.props.onScopeSelect('category_' + id);
-  },
-
-  allOnClick: function(){
-    this.props.onScopeSelect('all');
-  },
-
-  favoritesOnClick: function(){
-    this.props.onScopeSelect('favorites');
   },
 
   categories: function() {
     return window.categories.map(function(category){
-      return <li><a onClick={this.categoryOnClick.bind(this, category.id)}>{category.name}</a></li>
+      return <li><a href={'#category_' + category.id}>{category.name}</a></li>
     }, this);
   },
 
@@ -44,8 +32,7 @@ var SearchForm = React.createClass({
                 {this.scopeName(this.props.scopeId)} <span className="caret"/>
               </button>
               <ul className="dropdown-menu pull-right">
-                <li><a onClick={this.allOnClick}>{this.scopeName('all')}</a></li>
-                <li><a onClick={this.favoritesOnClick}>{this.scopeName('favorites')}</a></li>
+                <li><a href={'#all'}>{this.scopeName('all')}</a></li>
                 <li className="divider"></li>
                 {this.categories()}
               </ul>

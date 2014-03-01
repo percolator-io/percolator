@@ -16,7 +16,7 @@ var Item = React.createClass({
   createCategory: function(category) {
     return (
       <li>
-        <a href={'#' + category.name}>
+        <a href={'#category_' + category.id}>
           {category.name}
         </a>
       </li>
