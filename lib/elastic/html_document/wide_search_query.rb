@@ -1,15 +1,15 @@
 module Elastic
   module HtmlDocument
     class WideSearchQuery < BaseQuery
-      attr_accessor :phrase, :offset
+      attr_reader :query_string, :offset
 
-      def initialize(phrase, offset = nil)
-        @phrase = phrase
+      def initialize(query_string, offset = nil)
+        @query_string = query_string
         @offset = offset || 0
       end
 
       def result
-        q = phrase.present? ? query : match_all
+        q = query_string.present? ? query : match_all
         search q
       end
 
@@ -23,8 +23,13 @@ module Elastic
 
       def query
         {
-            from: offset,
-            query: { match: { _all: phrase } }
+          from: offset,
+          query: {
+            simple_query_string: {
+              query: query_string,
+              fields: %w(title^2 description keywords content host),
+            }
+          }
         }
       end
     end

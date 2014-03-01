@@ -28,7 +28,7 @@ FactoryGirl.define do
         title: FactoryGirl.generate(:string),
         description: FactoryGirl.generate(:string),
         keywords: ['keyword', FactoryGirl.generate(:string)].join(','),
-        body: FactoryGirl.generate(:text),
+        content: FactoryGirl.generate(:text),
     }
   end
 
