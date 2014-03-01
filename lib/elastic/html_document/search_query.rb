@@ -74,7 +74,6 @@ module Elastic
       end
 
       def stars_filter
-        return match_all_filter if user.guest?
         {
           nested: {
             path: 'stars',
@@ -120,7 +119,6 @@ module Elastic
       end
 
       def user_star_sort
-        return last_star_sort if user.guest?
         {
           sort: [
             {
