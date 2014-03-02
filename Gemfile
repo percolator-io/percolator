@@ -35,6 +35,7 @@ gem 'figaro'
 
 gem 'closure_tree'
 gem 'enumerize'
+gem 'paper_trail'
 
 gem 'sinatra', require: false
 

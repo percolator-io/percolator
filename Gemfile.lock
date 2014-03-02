@@ -156,6 +156,9 @@ GEM
       multi_json (~> 1.3)
       oauth2 (~> 0.9.3)
       omniauth (~> 1.2)
+    paper_trail (3.0.0)
+      activerecord (>= 3.0, < 5.0)
+      activesupport (>= 3.0, < 5.0)
     pg (0.17.1)
     polyglot (0.3.4)
     predicated (0.2.6)
@@ -306,6 +309,7 @@ DEPENDENCIES
   js-routes
   mechanize
   omniauth-github
+  paper_trail
   pg
   rails
   rails-assets-underscore
