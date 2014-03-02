@@ -18,6 +18,8 @@
             %span.icon-bar
           = link_to 'Percolator.io', root_path, class: 'navbar-brand'
         .collapse.navbar-collapse
+          %ul.nav.navbar-nav
+            %li= link_to 'categories', categories_path if current_user.has_access_to_categories?
           %ul.nav.navbar-nav.pull-right
             - if signed_in?
               %li= link_to 'select categories', edit_account_category_selection_path

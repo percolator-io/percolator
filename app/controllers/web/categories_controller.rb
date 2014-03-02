@@ -1,4 +1,8 @@
 class Web::CategoriesController < Web::ApplicationController
+  before_filter do
+    head :forbidden unless current_user.has_access_to_categories?
+  end
+
   def index
     @category_tree = Category.hash_tree
   end
