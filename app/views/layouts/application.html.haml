@@ -5,8 +5,6 @@
     = stylesheet_link_tag    "application", media: "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
-    - if signed_in?
-      %meta{name: 'api_token', content: current_user.api_token}
   %body
     .navbar.navbar-default.navbar-static-top{role: "navigation"}
       .container
