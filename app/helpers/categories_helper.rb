@@ -1,6 +1,6 @@
 module CategoriesHelper
   def categories_for_select
-    _categories_array_from_tree Category.hash_tree
+    @_categories_for_select ||= _categories_array_from_tree(Category.hash_tree)
   end
 
 private

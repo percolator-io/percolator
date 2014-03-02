@@ -1,4 +1,12 @@
-.nested-fields.form-group.well
-  = f.association :category, collection: categories_for_select, include_blank: false, label: false
-  = f.input :kind, as: :radio_buttons, label: false
-  = link_to_remove_association "remove", f, class: 'btn btn-danger'
+.nested-fields.row.form-group
+  .col-sm-8
+    = f.association :category, collection: categories_for_select,
+                               include_blank: false,
+                               label: false,
+                               input_html: { class: 'selectpicker', data: { style: "btn-default bold", width: '100%' } }
+  .col-sm-3.col-xs-10
+    = f.input :kind, label: false,
+                     input_html: { class: 'selectpicker', data: { width: '100%' } }
+  .col-sm-1.col-xs-2
+    = link_to_remove_association f, class: 'btn btn-danger btn-block' do
+      %span.glyphicon.glyphicon-remove

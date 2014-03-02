@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/Slashek/bootstrap-select-rails.git
+  revision: 862e56718a4b7d4b61502c2b76231c73c5ce113b
+  specs:
+    bootstrap-select-rails (1.3.5)
+
+GIT
   remote: git://github.com/pludoni/wrong.git
   revision: c6b5de060a751bdcd2ad1d47dedfbd48cced9b99
   specs:
@@ -285,6 +291,7 @@ DEPENDENCIES
   active_model_serializers
   addressable
   bootstrap-sass
+  bootstrap-select-rails!
   closure_tree
   cocoon
   database_cleaner

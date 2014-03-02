@@ -14,6 +14,7 @@ gem 'haml'
 gem 'bootstrap-sass'
 gem 'react-rails'
 gem 'js-routes'
+gem 'bootstrap-select-rails', github: 'Slashek/bootstrap-select-rails'
 gem 'rails-assets-underscore'
 
 gem 'sidekiq'

@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   include UserRepository
-  has_many :category_selections
+  has_many :category_selections, -> { includes(:category).order(:kind, 'categories.name') }
 
   validates :name, presence: true
   after_initialize :set_api_token, if: :new_record?

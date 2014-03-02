@@ -17,5 +17,15 @@
 //= require bootstrap
 //= require underscore
 //= require cocoon
+//= require bootstrap-select
 //= require_tree .
 //= require_self
+
+
+function initSelectpicker(){
+  $('.selectpicker').selectpicker();
+}
+
+$(function(){
+  initSelectpicker();
+});
