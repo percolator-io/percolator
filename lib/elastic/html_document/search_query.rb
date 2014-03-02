@@ -75,11 +75,11 @@ module Elastic
       end
 
       def selected_filter
-        must = user.selected_categories.map{ |c| category_filter c }
+        should = user.selected_categories.map{ |c| category_filter c }
         must_not = user.excluded_categories.map{ |c| category_filter c }
         {
             bool: {
-              must: must,
+              should: should,
               must_not: must_not
             }
         }
