@@ -3,12 +3,12 @@ class User::Guest
     -1
   end
 
-  def selected_categories
-    Category.none
+  def selected_categories_with_descendants
+    []
   end
 
-  def excluded_categories
-    Category.none
+  def excluded_categories_with_descendants
+    []
   end
 
   def guest?

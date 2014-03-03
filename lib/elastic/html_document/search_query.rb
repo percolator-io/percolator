@@ -75,8 +75,9 @@ module Elastic
       end
 
       def selected_filter
-        should = user.selected_categories.map{ |c| category_filter c }
-        must_not = user.excluded_categories.map{ |c| category_filter c }
+        # should a->b, must_not b, может быть стоит оптимизировать
+        should = user.selected_categories_with_descendants.map{ |c| category_filter c }
+        must_not = user.excluded_categories_with_descendants.map{ |c| category_filter c }
         {
             bool: {
               should: should,
