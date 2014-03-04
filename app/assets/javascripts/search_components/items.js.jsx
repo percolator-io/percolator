@@ -36,7 +36,7 @@ var Item = React.createClass({
       <li className='media'>
         <div className="media-body">
           <h4 className="media-heading">
-            <a href={this.props.url}>{this.props.title}</a>
+            <a href={this.props.url} target='_blank'>{this.props.title}</a>
           </h4>
           <div>{this.props.description}</div>
           <ul className='list-inline'>{this.props.categories.map(this.createCategory)}</ul>
