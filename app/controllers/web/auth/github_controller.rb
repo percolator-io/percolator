@@ -7,8 +7,6 @@ class Web::Auth::GithubController < Web::Auth::ApplicationController
 
     sign_in account.user
 
-    #TODO: нужно редиректить назад
-    # причем сохранять в мидлеваре прошлый путь, или в доркипере
-    redirect_to root_path
+    redirect_to stored_cpath
   end
 end
