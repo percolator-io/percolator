@@ -4,6 +4,7 @@ Asearcher::Application.routes.draw do
   scope module: :web do
     root 'welcome#index'
     resources :categories
+    resource :session, only: :destroy
 
     namespace :account do
       resource :category_selection

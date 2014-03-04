@@ -17,16 +17,19 @@
           = link_to 'Percolator.io', root_path, class: 'navbar-brand'
         .collapse.navbar-collapse
           %ul.nav.navbar-nav
-            %li= link_to 'categories', categories_path if current_user.has_access_to_categories?
-          %ul.nav.navbar-nav.pull-right
+            %li= link_to 'Categories', categories_path if current_user.has_access_to_categories?
+          %ul.nav.navbar-nav.navbar-right
             - if signed_in?
-              %li= link_to 'select categories', edit_account_category_selection_path
-              %li
-                %p.navbar-text
-                  %span.glyphicon.glyphicon-user
+              %li= link_to 'Select categories', edit_account_category_selection_path
+              %li.dropdown
+                = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
                   = current_user.name
+                  %b.caret
+                %ul.dropdown-menu
+                  %li= link_to 'Sign out', session_path, method: :delete
+
             - if signed_out?
-              %li= link_to 'github', auth_github_cpath
+              %li= link_to 'Github', auth_github_cpath
 
     .container
       = yield
