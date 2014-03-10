@@ -14,7 +14,7 @@
 # definition into the server list. The second argument
 # something that quacks like a hash can be used to set
 # extended properties on the server.
-server '192.168.1.147', user: 'percolator', roles: %w{web app db}
+server '188.226.133.52', user: 'percolator', roles: %w{web app db}
 set :rails_env, 'production'
 set :branch, "master"
 
