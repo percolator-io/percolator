@@ -9,11 +9,13 @@ module UserRepository
     has_many :excluded_categories, through: :excluded_category_selections, source: :category
 
     def selected_categories_with_descendants
+      return [] if selected_categories.empty?
       descendants = Category.with_ancestor(*selected_categories)
       selected_categories | descendants
     end
 
     def excluded_categories_with_descendants
+      return [] if excluded_categories.empty?
       descendants = Category.with_ancestor(*excluded_categories)
       excluded_categories | descendants
     end
