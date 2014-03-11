@@ -32,7 +32,7 @@ module Elastic
           query: {
             simple_query_string: {
               query: query_string,
-              fields: %w(title^2 description keywords content host),
+              fields: %w(title^2 description keywords content.content host),
             }
           }
         }
