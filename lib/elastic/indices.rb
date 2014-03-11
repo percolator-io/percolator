@@ -4,7 +4,8 @@ module Elastic
     class << self
       def create
         POOL.with do |client|
-          client.indices.create index: :documents, body: { settings: self::Documents.settings }
+          client.indices.create index: :documents_v1, body: { settings: self::Documents.settings }
+          client.indices.put_alias index: :documents_v1, name: :documents
         end
       end
 
@@ -17,7 +18,7 @@ module Elastic
       def put_mappings
         POOL.with do |client|
           self::Documents.mappings.each do |type, mapping|
-            client.indices.put_mapping index: :documents, type: type, body: { type => mapping }
+            client.indices.put_mapping index: :documents_v1, type: type, body: { type => mapping }
           end
         end
       end
