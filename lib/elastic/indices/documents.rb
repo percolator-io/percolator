@@ -46,6 +46,7 @@ module Elastic
         def mappings
           {
             html_document: {
+              _timestamp: { enabled: true, store: true },
               properties: {
                 title: { type: :string },
                 description: { type: :string },
