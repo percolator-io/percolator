@@ -78,13 +78,12 @@ module Elastic
         # should a->b, must_not b, может быть стоит оптимизировать
         should = user.selected_categories_with_descendants.map{ |c| category_filter c }
         must_not = user.excluded_categories_with_descendants.map{ |c| category_filter c }
-        return match_all_filter if should.empty? && must_not.empty?
-
-        result = { bool: {} }
-        result[:bool][:should] = should if should.any?
-        result[:bool][:must_not] = must_not if must_not.any?
-
-        result
+        {
+          bool: {
+            should: should,
+            must_not: must_not
+          }
+        }
       end
 
       def stars_filter
