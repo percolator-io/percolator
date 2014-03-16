@@ -62,16 +62,8 @@ module Elastic
         end
       end
 
-      #TODO: избавиться от дублирования
       def category_filter(category)
-        {
-          query: {
-            query_string: {
-              query: category.try(:query) || '',
-              fields: %w(title description keywords host),
-            }
-          }
-        }
+        Elastic::Shared::CategoryQuery.query category
       end
 
       def selected_filter

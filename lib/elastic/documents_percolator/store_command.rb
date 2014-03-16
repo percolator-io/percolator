@@ -14,16 +14,8 @@ module Elastic
       end
 
     private
-      #TODO: избавиться от дублирования
       def attributes
-        {
-          query: {
-            query_string: {
-              query: category.query,
-              fields: %w(title description keywords host),
-            }
-          }
-        }
+        Elastic::Shared::CategoryQuery.query category
       end
     end
 
