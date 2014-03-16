@@ -43,6 +43,8 @@ gem 'omniauth-github'
 
 gem 'doorkeeper'
 
+gem 'percolator_categories', github: 'percolator-io/percolator_categories'
+
 group :development do
   gem 'capistrano'
   gem 'capistrano-bundler'
