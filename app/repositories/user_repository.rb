@@ -8,6 +8,8 @@ module UserRepository
     has_many :selected_categories, through: :select_category_selections, source: :category
     has_many :excluded_categories, through: :excluded_category_selections, source: :category
 
+    scope :admin, -> { where(admin: true) }
+
     def selected_categories_with_descendants
       return [] if selected_categories.empty?
       descendants = Category.with_ancestor(*selected_categories)
