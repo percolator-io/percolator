@@ -18,6 +18,7 @@
           = link_to 'Percolator.io', root_path, class: 'navbar-brand'
         .collapse.navbar-collapse
           %ul.nav.navbar-nav
+            %li=link_to 'Readme', 'https://github.com/percolator-io/percolator/blob/master/README.md'
           %ul.nav.navbar-nav.navbar-right
             - if signed_in?
               %li= link_to 'Select categories', edit_account_category_selection_path
