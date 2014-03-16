@@ -23,6 +23,7 @@ class CategoriesDeployWorker
       parent = Category.find_by external_id: external.parent.id if external.parent
       category.parent = parent
 
+      #TODO: сохратять только изменившиеся
       category.save!
 
       import external.subcategories
