@@ -1,0 +1,16 @@
+---
+- id: existing_category
+  name: existing
+  query: existing query
+
+- id: category
+  name: category
+  query: first query
+
+- id: with_subcategories
+  name: With subcategories
+  query: with subcategories
+  subcategories:
+    - id: sub
+      name: Sub
+      query: sub

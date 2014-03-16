@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/percolator-io/percolator_categories.git
-  revision: 56c6f24aed1788c7c4d0d1d886c2464702c525a5
+  revision: 2767e97394e3834a446af897c7291446be1b901f
   specs:
     percolator_categories (0.0.1)
       activemodel (> 4.0.0)

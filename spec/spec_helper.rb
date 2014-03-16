@@ -85,3 +85,7 @@ Spork.each_run do
   # This code will be run each time you run your specs.
 
 end
+
+def fixture_file_path(name)
+  File.join(Dir.pwd, 'spec', 'fixtures', name)
+end

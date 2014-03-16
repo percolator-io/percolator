@@ -1,7 +1,8 @@
 module HtmlPage
   class << self
     def render(attrs)
-      template = File.read("#{Rails.root}/spec/files/page.html.haml")
+      path = fixture_file_path("page.html.haml")
+      template = File.read(path)
       Haml::Engine.new(template).render(Object.new, attrs)
     end
   end

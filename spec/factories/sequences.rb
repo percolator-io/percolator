@@ -3,7 +3,7 @@ FactoryGirl.define do
     n
   end
 
-  sequence :string, aliases: %i(name) do |n|
+  sequence :string, aliases: %i(name external_id) do |n|
     "string-#{n}"
   end
 
