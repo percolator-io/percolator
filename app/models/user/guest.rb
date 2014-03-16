@@ -14,10 +14,4 @@ class User::Guest
   def guest?
     true
   end
-
-  User.available_resources.values.each do |resource|
-    define_method "has_access_to_#{resource}?" do
-      false
-    end
-  end
 end

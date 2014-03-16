@@ -1,2 +1,4 @@
-= link_to 'new category', new_category_path, class: 'btn btn-primary'
-= render partial: 'tree', object: @category_tree
+%ul.category-list
+  - categories_for_select.each do |c|
+    %li
+      = c.first

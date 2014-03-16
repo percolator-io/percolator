@@ -1,8 +1,1 @@
-- if tree.any?
-  %ul.category-list
-    - categories_for_select.each do |c|
-      %li
-        = c.first
-        .pull-right
-          = link_to 'edit', edit_category_path(c.last)
-          = link_to 'delete', category_path(c.last), method: :delete
+

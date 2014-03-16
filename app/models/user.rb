@@ -8,8 +8,6 @@ class User < ActiveRecord::Base
 
   accepts_nested_attributes_for :category_selections, allow_destroy: true
 
-  enumerize :available_resources, in: %i(categories), multiple: true, predicates: { prefix: :has_access_to }
-
   def guest?
     false
   end

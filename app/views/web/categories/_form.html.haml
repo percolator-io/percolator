@@ -1,6 +1,0 @@
-= simple_form_for @category do |f|
-  = f.input :name
-  = f.association :parent, collection: categories_for_select
-  = f.input :query
-  = f.submit class: 'btn btn-primary'
-  = link_to 'Back', categories_path, class: 'btn btn-default'

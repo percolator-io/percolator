@@ -3,7 +3,7 @@ Asearcher::Application.routes.draw do
   use_doorkeeper
   scope module: :web do
     root 'welcome#index'
-    resources :categories
+    resources :categories, only: :index
     resource :session, only: %i(new destroy)
 
     namespace :account do
