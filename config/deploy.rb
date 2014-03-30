@@ -10,6 +10,8 @@ set :repo_url, 'git@bitbucket.org:m_kuzmin/asearcher.git'
 # Default deploy_to directory is /var/www/my_app
 set :deploy_to, '/var/www/percolator'
 
+set :rollbar_token, '52c87b830fc94c328b2ae0458de05f9d'
+set :rollbar_env, Proc.new { fetch :stage }
 
 # Default value for :pty is false
 # set :pty, true
