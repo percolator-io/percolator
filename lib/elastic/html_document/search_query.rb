@@ -12,14 +12,17 @@ module Elastic
       end
 
       def result
+        result_q = {}
+        result_q.merge! query_options
+
         q = if query_string.present?
           query.deep_merge scope_filter
         else
           scope_filter.merge sort
         end
+        result_q.merge! q
 
-        q.merge! query_options
-        search q
+        search result_q
       end
 
     private
