@@ -10,8 +10,7 @@ describe WebApi::HtmlDocumentsController do
       attrs.merge! url: url, host: 'example.com'
 
       id = IdGenerator.from_normalized_uri url
-      user = create :user
-      Elastic::HtmlDocument::StoreCommand.new(id, attrs, user.id).perform(refresh: true)
+      Elastic::HtmlDocument::UpdateCommand.new(id, attrs).perform(refresh: true)
     end
 
     it "returns http success" do

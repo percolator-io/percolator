@@ -11,6 +11,7 @@ module StarCreatorService
       components = normalized_uri.to_hash
 
       StarCreatorWorker.perform_async components, user.id
+      UpdateHtmlDocumentWorker.perform_async components
     end
   end
 
