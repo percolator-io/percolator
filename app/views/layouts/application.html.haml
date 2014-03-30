@@ -32,7 +32,7 @@
                   %li= link_to 'Sign out', session_path, method: :delete
 
             - if signed_out?
-              %li= link_to 'Github', auth_github_cpath
+              %li= link_to 'Sign in via Github', auth_github_cpath
 
     .container
       = yield
