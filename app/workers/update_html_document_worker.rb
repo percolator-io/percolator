@@ -21,7 +21,7 @@ class UpdateHtmlDocumentWorker
     reputation_attrs = Reputation.new(uri.host).get
     attrs.merge! reputation_attrs
 
-    extracted_attrs = ExtractionService.extract(page)
+    extracted_attrs = ExtractionService.new(page).extract
     attrs.merge! extracted_attrs
 
     id = IdGenerator.from_normalized_uri uri

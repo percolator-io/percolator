@@ -1,39 +1,50 @@
-module ExtractionService
-  class << self
-    def extract(page)
-      {
-          title:  title(page),
-          description: description(page),
-          keywords: keywords(page),
-          content: content(page),
-      }
-    end
+class ExtractionService
+  attr_reader :page, :sanitizer
 
-  private
-    def title(page)
-      page.title.strip
-    end
+  def initialize(page)
+    @page = page
+    @sanitizer = HTML::FullSanitizer.new
+  end
 
-    def description(page)
-      max_length = 160
-      descr = page.search('/html/head/meta[@name="description"]/@content').first.try(:value) || ''
+  def extract
+    {
+      title:  title,
+      description: description,
+      keywords: keywords,
+      content: content,
+    }
+  end
 
-      return descr if descr.length > 0 && descr.length < max_length
-      content(page).truncate(max_length, separator: /\s/)
-    end
+private
+  def title
+    @title ||= page.title.strip
+  end
 
-    def content(page)
-      document = Readability::Document.new(page.content)
-      sanitizer = HTML::FullSanitizer.new
-      sanitized_content = sanitizer.sanitize(document.content)
-      sanitized_content.gsub!(/\s+/, ' ' )
-      sanitized_content.strip!
-      sanitized_content
-    end
+  def description
+    return @description if @description
+    max_length = 160
+    @description = page.search('/html/head/meta[@name="description"]/@content').first.try(:value) || ''
 
-    def keywords(page)
-      keywords = page.search('/html/head/meta[@name="keywords"]/@content').first.try(:value) || ''
-      keywords.split(',').map(&:strip)
-    end
+    return @description if @description.length > 0 && @description.length < max_length
+    @description = sanitized_content.truncate(max_length, separator: /\s/)
+  end
+
+  def content
+    @content ||= Readability::Document.new(page.content).content
+  end
+
+  def sanitized_content
+    return @sanitized_content if @sanitized_content
+
+    @sanitized_content = sanitizer.sanitize(content)
+    @sanitized_content.gsub!(/\s+/, ' ' )
+    @sanitized_content.strip!
+    @sanitized_content
+  end
+
+  def keywords
+    return @keywords if @keywords
+    keywords = page.search('/html/head/meta[@name="keywords"]/@content').first.try(:value) || ''
+    @keywords = keywords.split(',').map(&:strip)
   end
 end
