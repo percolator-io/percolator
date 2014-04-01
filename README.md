@@ -19,3 +19,7 @@
 * присылать фидбек в [issue tracker][issues]
 
 [issues]: https://github.com/percolator-io/percolator/issues
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/percolator-io/percolator/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
