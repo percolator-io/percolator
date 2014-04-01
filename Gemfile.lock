@@ -121,6 +121,9 @@ GEM
     hike (1.2.3)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
+    httparty (0.13.0)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.6.9)
     ice_nine (0.11.0)
     jquery-rails (3.1.0)
@@ -338,6 +341,7 @@ DEPENDENCIES
   figaro
   haml
   hashie
+  httparty
   jquery-rails
   js-routes
   mechanize

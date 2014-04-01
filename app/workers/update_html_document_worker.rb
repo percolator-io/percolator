@@ -18,6 +18,9 @@ class UpdateHtmlDocumentWorker
     page = a.get(uri)
     return unless page.kind_of? Mechanize::Page
 
+    reputation_attrs = Reputation.new(uri.host).get
+    attrs.merge! reputation_attrs
+
     extracted_attrs = ExtractionService.extract(page)
     attrs.merge! extracted_attrs
 

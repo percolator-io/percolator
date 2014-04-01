@@ -9,6 +9,17 @@ describe Api::V1::StarsController do
     @page = HtmlPage.render @page_attrs
     @stub = stub_request(:get, @url).to_return(status: 200, body: @page, headers: { "Content-Type" => 'text/html' })
 
+    wot_response = <<-JSON
+    {
+      "example.com": {
+        "target": "example.com",
+        "0": [ 93, 65 ],
+        "4": [ 92, 58 ]
+      }
+    }
+    JSON
+    @wot_stub = stub_request(:get, /http:\/\/api\.mywot\.com.*/).to_return(status: 200, body: wot_response)
+
     @user = create :user
     access_token = create :access_token, resource_owner_id: @user.id
     @params = { star: { url: @url }, access_token: access_token.token }
@@ -20,6 +31,7 @@ describe Api::V1::StarsController do
 
       assert { response.status == 200 }
       @stub.should have_been_requested
+      @wot_stub.should have_been_requested
 
       document = Elastic::HtmlDocument::FindQuery.new(@id).result
 

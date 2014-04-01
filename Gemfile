@@ -26,6 +26,7 @@ gem 'virtus'
 gem 'active_model_serializers'
 gem 'hashie'
 gem 'mechanize'
+gem 'httparty'
 gem "ruby-readability", require: 'readability'
 
 gem 'simple_form'
