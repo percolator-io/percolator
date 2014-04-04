@@ -2,7 +2,7 @@ module Elastic
   module HtmlDocument
 
     class BaseQuery < Operation
-      FIELDS = %i(title description keywords url host stars)
+      FIELDS = %i(title description keywords url host stars original_html)
 
     private
       def search(q)
@@ -50,9 +50,8 @@ module Elastic
           body << { }
         end
 
-        responce = nil
-        POOL.with do |client|
-          responce = client.mpercolate body: body
+        responce = POOL.with do |client|
+          client.mpercolate body: body
         end
 
         responce['responses'].map do |resp|

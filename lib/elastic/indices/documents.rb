@@ -51,9 +51,10 @@ module Elastic
                 title: { type: :string },
                 description: { type: :string },
                 keywords: { type: :string, analyzer: :keywords_analyzer },
-                content: { type: :langdetect },
+                sanitized_content: { type: :langdetect },
                 url: { type: :string, index: :not_analyzed },
                 host: { type: :string, index: :not_analyzed },
+                original_html: { type: :string, index: :not_analyzed },
                 stars: {
                     type: :nested,
                     properties: {

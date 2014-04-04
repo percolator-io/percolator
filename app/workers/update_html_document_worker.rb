@@ -5,11 +5,6 @@ class UpdateHtmlDocumentWorker
     normalized_uri_components.symbolize_keys!
     uri = Addressable::URI.new normalized_uri_components
 
-    attrs = {
-        url: uri.to_s,
-        host: uri.host,
-    }
-
     a = Mechanize.new do |agent|
       agent.user_agent_alias = 'Mac Safari'
     end
@@ -17,6 +12,11 @@ class UpdateHtmlDocumentWorker
     #TODO: может проставить заголовки Accept, что бы page имел класс Mechanize::Page
     page = a.get(uri)
     return unless page.kind_of? Mechanize::Page
+
+    attrs = {
+        url: uri.to_s,
+        host: uri.host
+    }
 
     reputation_attrs = Reputation.new(uri.host).get
     attrs.merge! reputation_attrs

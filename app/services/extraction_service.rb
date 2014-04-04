@@ -11,7 +11,8 @@ class ExtractionService
       title:  title,
       description: description,
       keywords: keywords,
-      content: content,
+      sanitized_content: sanitized_content,
+      original_html: original_html,
     }
   end
 
@@ -29,22 +30,17 @@ private
     @description = sanitized_content.truncate(max_length, separator: /\s/)
   end
 
-  def content
-    @content ||= Readability::Document.new(page.content).content
-  end
-
   def sanitized_content
-    return @sanitized_content if @sanitized_content
-
-    @sanitized_content = sanitizer.sanitize(content)
-    @sanitized_content.gsub!(/\s+/, ' ' )
-    @sanitized_content.strip!
-    @sanitized_content
+    @sanitized_content ||= Readability::Document.new(original_html, tags: []).content
   end
 
   def keywords
     return @keywords if @keywords
     keywords = page.search('/html/head/meta[@name="keywords"]/@content').first.try(:value) || ''
     @keywords = keywords.split(',').map(&:strip)
+  end
+
+  def original_html
+    @original_html ||= page.content
   end
 end

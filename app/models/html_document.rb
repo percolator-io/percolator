@@ -14,6 +14,7 @@ class HtmlDocument
   attribute :host
   attribute :title
   attribute :description
+  attribute :original_html
   attribute :keywords, Array[String]
   attribute :categories, Array[Category]
   attribute :stars, Array[Star]

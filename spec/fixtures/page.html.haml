@@ -7,4 +7,4 @@
     - if keywords.present?
       %meta{ name: 'keywords', content: "#{keywords}" }
   %body
-    = content
+    = sanitized_content
