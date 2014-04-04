@@ -15,7 +15,8 @@ class UpdateHtmlDocumentWorker
 
     attrs = {
         url: uri.to_s,
-        host: uri.host
+        host: uri.host,
+        updated_at: DateTime.current,
     }
 
     reputation_attrs = Reputation.new(uri.host).get

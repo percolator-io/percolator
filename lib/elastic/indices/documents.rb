@@ -55,6 +55,7 @@ module Elastic
                 url: { type: :string, index: :not_analyzed },
                 host: { type: :string, index: :not_analyzed },
                 original_html: { type: :string, index: :not_analyzed },
+                updated_at: { type: :date },
                 stars: {
                     type: :nested,
                     properties: {
