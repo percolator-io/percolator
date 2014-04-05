@@ -12,7 +12,7 @@ class ExtractionService
       description: description,
       keywords: keywords,
       sanitized_content: sanitized_content,
-      original_html: original_html,
+      content_in_base64: content_in_base64,
     }
   end
 
@@ -31,7 +31,7 @@ private
   end
 
   def sanitized_content
-    @sanitized_content ||= Readability::Document.new(original_html, tags: []).content
+    @sanitized_content ||= Readability::Document.new(content, tags: []).content
   end
 
   def keywords
@@ -40,7 +40,11 @@ private
     @keywords = keywords.split(',').map(&:strip)
   end
 
-  def original_html
-    @original_html ||= page.content
+  def content
+    @content ||= page.content
+  end
+
+  def content_in_base64
+    @content_in_base64 ||= Base64.encode64(content)
   end
 end

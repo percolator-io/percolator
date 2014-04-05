@@ -54,7 +54,7 @@ module Elastic
                 sanitized_content: { type: :langdetect },
                 url: { type: :string, index: :not_analyzed },
                 host: { type: :string, index: :not_analyzed },
-                original_html: { type: :string, index: :not_analyzed },
+                content_in_base64: { type: :string, index: :no },
                 updated_at: { type: :date },
                 stars: {
                     type: :nested,

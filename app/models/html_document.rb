@@ -14,7 +14,7 @@ class HtmlDocument
   attribute :host
   attribute :title
   attribute :description
-  attribute :original_html
+  attribute :content_in_base64, String, default: ''
   attribute :keywords, Array[String]
   attribute :categories, Array[Category]
   attribute :stars, Array[Star]

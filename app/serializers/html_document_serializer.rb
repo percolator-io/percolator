@@ -19,8 +19,10 @@ class HtmlDocumentSerializer < ActiveModel::Serializer
 
 
   def content
+    html = Base64.decode64(object.content_in_base64)
+
     #img, a
     tags = ["section", "article", "strong", "em", "b", "i", "p", "code", "pre", "tt", "samp", "kbd", "var", "sub", "sup", "dfn", "cite", "big", "small", "address", "hr", "br", "div", "span", "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol", "li", "dl", "dt", "dd", "abbr", "acronym", "blockquote", "del", "ins"]
-    Readability::Document.new(object.original_html, tags: tags).content
+    Readability::Document.new(html, tags: tags).content
   end
 end

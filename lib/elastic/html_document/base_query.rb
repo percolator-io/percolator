@@ -2,7 +2,7 @@ module Elastic
   module HtmlDocument
 
     class BaseQuery < Operation
-      FIELDS = %i(title description keywords url host stars original_html)
+      FIELDS = %i(title description keywords url host stars content_in_base64)
 
     private
       def search(q)
