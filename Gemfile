@@ -47,6 +47,7 @@ gem 'doorkeeper'
 gem 'percolator_categories', github: 'percolator-io/percolator_categories'
 
 gem 'rollbar'
+gem 'newrelic_rpm'
 
 group :development do
   gem 'capistrano'
