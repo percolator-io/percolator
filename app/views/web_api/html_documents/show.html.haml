@@ -1,0 +1,7 @@
+.modal-header
+  %button.close{type: "button", data: { dismiss: "modal" }, 'aria-hidden' => true}
+    &times;
+  %h2.modal-title= @document.title
+  = link_to @document.url, @document.url, target: '_blank'
+.modal-body
+  != html_document_content(@document)

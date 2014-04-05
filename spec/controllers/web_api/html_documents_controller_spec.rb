@@ -9,8 +9,8 @@ describe WebApi::HtmlDocumentsController do
       attrs = generate :page_attrs
       attrs.merge! url: url, host: 'example.com'
 
-      id = IdGenerator.from_normalized_uri url
-      Elastic::HtmlDocument::UpdateCommand.new(id, attrs).perform(refresh: true)
+      @id = IdGenerator.from_normalized_uri url
+      Elastic::HtmlDocument::UpdateCommand.new(@id, attrs).perform(refresh: true)
     end
 
     it "returns http success" do
@@ -20,6 +20,11 @@ describe WebApi::HtmlDocumentsController do
       json = JSON.parse(response.body)
       assert { json['html_documents'].one? == true }
       assert { json['meta'].any? == true }
+    end
+
+    it "returns http success" do
+      get :show, id: @id, format: :html
+      assert { response.status == 200 }
     end
   end
 end

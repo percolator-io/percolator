@@ -18,7 +18,7 @@ Asearcher::Application.routes.draw do
   end
 
   namespace :web_api do
-    resources :html_documents, only: :index
+    resources :html_documents, only: %i[index show]
   end
 
   namespace :api do
