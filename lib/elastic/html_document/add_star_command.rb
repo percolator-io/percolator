@@ -4,9 +4,13 @@ module Elastic
       SCRIPT = <<-MVEL
         s = ctx._source;
         new_star = ["user_id" : user_id, "created_at" : star_created_at];
-        stars = ($ in s.stars if $.user_id != user_id);
-        stars.add(new_star);
-        s.stars = stars;
+        if (s.containsKey("stars")) {
+          stars = ($ in s.stars if $.user_id != user_id);
+          stars.add(new_star);
+          s.stars = stars;
+        } else {
+          s.stars = [new_star];
+        }
       MVEL
 
       attr_reader :id, :user_id
