@@ -33,6 +33,7 @@ gem 'simple_form'
 gem 'cocoon'
 
 gem 'figaro'
+gem 'method_decorators'
 
 gem 'closure_tree'
 gem 'enumerize'

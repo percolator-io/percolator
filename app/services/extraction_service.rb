@@ -1,4 +1,6 @@
 class ExtractionService
+  extend MethodDecorators
+
   attr_reader :page, :sanitizer
 
   def initialize(page)
@@ -17,34 +19,38 @@ class ExtractionService
   end
 
 private
+  +MethodDecorators::Memoize
   def title
-    @title ||= page.title.to_s.strip
+    page.title.to_s.strip
   end
 
+  +MethodDecorators::Memoize
   def description
-    return @description if @description
     max_length = 160
-    @description = page.search('/html/head/meta[@name="description"]/@content').first.try(:value).to_s
+    description = page.search('/html/head/meta[@name="description"]/@content').first.try(:value).to_s
+    return description if description.length > 0 && description.length < max_length
 
-    return @description if @description.length > 0 && @description.length < max_length
-    @description = sanitized_content.truncate(max_length, separator: /\s/)
+    sanitized_content.truncate(max_length, separator: /\s/)
   end
 
+  +MethodDecorators::Memoize
   def sanitized_content
-    @sanitized_content ||= Readability::Document.new(content, tags: []).content
+    Readability::Document.new(content, tags: []).content
   end
 
+  +MethodDecorators::Memoize
   def keywords
-    return @keywords if @keywords
     keywords = page.search('/html/head/meta[@name="keywords"]/@content').first.try(:value).to_s
-    @keywords = keywords.split(',').map(&:strip)
+    keywords.split(',').map(&:strip)
   end
 
+  +MethodDecorators::Memoize
   def content
-    @content ||= page.content.to_s
+    page.content.to_s
   end
 
+  +MethodDecorators::Memoize
   def content_in_base64
-    @content_in_base64 ||= Base64.encode64(content)
+    Base64.encode64(content)
   end
 end
