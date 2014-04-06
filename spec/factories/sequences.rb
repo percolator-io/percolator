@@ -29,6 +29,7 @@ FactoryGirl.define do
         description: FactoryGirl.generate(:string),
         keywords: ['keyword', FactoryGirl.generate(:string)].join(','),
         sanitized_content: FactoryGirl.generate(:text),
+        blacklists: false,
     }
   end
 

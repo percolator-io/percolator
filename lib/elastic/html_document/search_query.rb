@@ -43,10 +43,10 @@ module Elastic
 
       def filter
         filters = case scope
-        when /category_(\d+)/ then [category_filter(Category.find_by id: $1)]
+        when /category_(\d+)/ then [category_filter(Category.find_by id: $1), verified_content_filter]
         when 'stars' then [stars_filter]
-        when 'selected' then [selected_filter]
-        else [match_all_filter]
+        when 'selected' then [selected_filter, verified_content_filter]
+        else [verified_content_filter]  # or match_all_filter
         end
         filters << have_content_filter
         {
@@ -76,7 +76,6 @@ module Elastic
         # should a->b, must_not b, может быть стоит оптимизировать
         should = user.selected_categories_with_descendants.map{ |c| category_filter c }
         must_not = user.excluded_categories_with_descendants.map{ |c| category_filter c }
-
         return { not: match_all_filter } if should.empty? && must_not.empty? #TODO: fix me
 
         {
@@ -101,9 +100,7 @@ module Elastic
       end
 
       def match_all_filter
-        {
-           match_all: {}
-        }
+        { match_all: {} }
       end
 
       def first_star_sort
@@ -155,6 +152,45 @@ module Elastic
           }
         }
       end
+
+      def verified_content_filter
+        {
+          and: [wot_filter(:trustworthiness, 40, 15), wot_filter(:child_safety, 40, 15),  white_list]
+        }
+      end
+
+      # see http://mywot.com
+      def wot_filter(category_name, reputation_level, confidence_level)
+        raise 'unknown category_name' if %w[trustworthiness child_safety].exclude? category_name.to_s
+        {
+          or: [
+            {
+              nested: {
+                path: category_name,
+                filter: {
+                  or: [
+                    {
+                      and: [
+                        { range: { "#{category_name}.reputation" => { gte: reputation_level } } },
+                        { range: { "#{category_name}.confidence" => { gte: confidence_level } } }
+                      ]
+                    },
+                    # выбираем все с недостаточным уровнем уверенности в корректности репутации
+                    { range: { "#{category_name}.confidence" => { lt: confidence_level } } },
+                    { missing: { field: %W[#{category_name}.reputation #{category_name}.confidence] } }
+                  ]
+                }
+              }
+            },
+            { missing: { field: "#{category_name}" } },
+          ]
+        }
+      end
+
+      def white_list
+        { term: { blacklists: false } }
+      end
     end
+
   end
 end

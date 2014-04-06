@@ -63,6 +63,21 @@ module Elastic
                       created_at: { type: :date },
                     },
                 },
+                child_safety: {
+                  type: :nested,
+                  properties: {
+                    reputation: { type: :integer },
+                    confidence: { type: :integer },
+                  },
+                },
+                trustworthiness: {
+                  type: :nested,
+                  properties: {
+                    reputation: { type: :integer },
+                    confidence: { type: :integer },
+                  },
+                },
+                blacklists: { type: :boolean },
               }
             }
           }

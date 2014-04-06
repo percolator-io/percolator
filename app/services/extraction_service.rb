@@ -18,13 +18,13 @@ class ExtractionService
 
 private
   def title
-    @title ||= page.title.strip
+    @title ||= page.title.to_s.strip
   end
 
   def description
     return @description if @description
     max_length = 160
-    @description = page.search('/html/head/meta[@name="description"]/@content').first.try(:value) || ''
+    @description = page.search('/html/head/meta[@name="description"]/@content').first.try(:value).to_s
 
     return @description if @description.length > 0 && @description.length < max_length
     @description = sanitized_content.truncate(max_length, separator: /\s/)
@@ -36,12 +36,12 @@ private
 
   def keywords
     return @keywords if @keywords
-    keywords = page.search('/html/head/meta[@name="keywords"]/@content').first.try(:value) || ''
+    keywords = page.search('/html/head/meta[@name="keywords"]/@content').first.try(:value).to_s
     @keywords = keywords.split(',').map(&:strip)
   end
 
   def content
-    @content ||= page.content
+    @content ||= page.content.to_s
   end
 
   def content_in_base64
