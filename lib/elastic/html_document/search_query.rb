@@ -16,9 +16,9 @@ module Elastic
         result_q.merge! query_options
 
         q = if query_string.present?
-          query.deep_merge scope_filter
+          query.deep_merge filter
         else
-          scope_filter.merge sort
+          filter.merge sort
         end
         result_q.merge! q
 
@@ -41,17 +41,20 @@ module Elastic
         }
       end
 
-      def scope_filter
-        filter = case scope
-        when /category_(\d+)/ then category_filter(Category.find_by id: $1)
-        when 'stars' then stars_filter
-        when 'selected' then selected_filter
-        else match_all_filter
+      def filter
+        filters = case scope
+        when /category_(\d+)/ then [category_filter(Category.find_by id: $1)]
+        when 'stars' then [stars_filter]
+        when 'selected' then [selected_filter]
+        else [match_all_filter]
         end
+        filters << have_content_filter
         {
           query: {
             constant_score: {
-              filter: filter
+              filter: {
+                and: filters
+              }
             }
           }
         }
@@ -73,10 +76,13 @@ module Elastic
         # should a->b, must_not b, может быть стоит оптимизировать
         should = user.selected_categories_with_descendants.map{ |c| category_filter c }
         must_not = user.excluded_categories_with_descendants.map{ |c| category_filter c }
+
+        return { not: match_all_filter } if should.empty? && must_not.empty? #TODO: fix me
+
         {
           bool: {
             should: should,
-            must_not: must_not
+            must_not: must_not,
           }
         }
       end
@@ -139,6 +145,14 @@ module Elastic
               }
             }
           ]
+        }
+      end
+
+      def have_content_filter
+        {
+          exists: {
+            field: %w[url title]
+          }
         }
       end
     end
