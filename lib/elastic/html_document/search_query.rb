@@ -33,9 +33,13 @@ module Elastic
       def query
         {
           query: {
-            simple_query_string: {
-              query: query_string,
-              fields: %w(title^2 description keywords sanitized_content.sanitized_content host),
+            filtered: {
+              query: {
+                simple_query_string: {
+                  query: query_string,
+                  fields: %w(title^2 description keywords sanitized_content.sanitized_content host),
+                }
+              }
             }
           }
         }
@@ -51,7 +55,7 @@ module Elastic
         filters << have_content_filter
         {
           query: {
-            constant_score: {
+            filtered: {
               filter: {
                 and: filters
               }

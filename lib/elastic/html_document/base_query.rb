@@ -2,12 +2,13 @@ module Elastic
   module HtmlDocument
 
     class BaseQuery < Operation
-      FIELDS = %i(title description keywords url host stars content_in_base64)
+      FIELDS = %i(title description keywords url host stars)
 
     private
       def search(q)
         body = { _source: FIELDS }
         body.merge! q
+        body.merge! highlight
         params = address.merge body: body
 
         results = POOL.with { |client| client.search params }
@@ -20,9 +21,28 @@ module Elastic
         Collection.new models, mash.hits.total
       end
 
+      def highlight
+        {
+          highlight: {
+            fields: {
+              title: { },
+              sanitized_content: { fragment_size: 100, number_of_fragments: 3 }
+            },
+            pre_tags: ["<strong>"],
+            post_tags: ["</strong>"],
+          }
+        }
+      end
+
       def wrap_item(mash)
         attrs = mash._source
+        highlighted_sanitized_content = mash.highlight.try(:sanitized_content) || []
+
         attrs.id = mash._id
+
+        attrs.title = mash.highlight.try(:title) if mash.highlight.try(:title)
+        attrs.description = highlighted_sanitized_content.join(' ') if highlighted_sanitized_content.any?
+
         ::HtmlDocument.new attrs
       end
 

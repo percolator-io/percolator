@@ -51,7 +51,13 @@ module Elastic
                 title: { type: :string },
                 description: { type: :string },
                 keywords: { type: :string, analyzer: :keywords_analyzer },
-                sanitized_content: { type: :langdetect },
+                sanitized_content: {
+                  type: :langdetect,
+                  fields: {
+                    sanitized_content: { type: :string, term_vector: :with_positions_offsets },
+                    lang: { type: :string, index: :not_analyzed }
+                  }
+                },
                 url: { type: :string, index: :not_analyzed },
                 host: { type: :string, index: :not_analyzed },
                 content_in_base64: { type: :string, index: :no },

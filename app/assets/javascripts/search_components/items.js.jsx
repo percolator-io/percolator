@@ -36,11 +36,9 @@ var Item = React.createClass({
       <li className='media'>
         <div className="media-body">
           <h4 className="media-heading">
-            <a href={Routes.web_api_html_document_path(this.props.id)} data-toggle="modal" data-target={'#' + this.props.id}>
-              {this.props.title}
-            </a>
+            <a dangerouslySetInnerHTML={{__html: this.props.title}} href={Routes.web_api_html_document_path(this.props.id)} data-toggle="modal" data-target={'#' + this.props.id}/>
           </h4>
-          <div>{this.props.description}</div>
+          <div dangerouslySetInnerHTML={{__html: this.props.description}} />
 
           <ul className='list-inline'>{this.props.categories.map(this.createCategory)}</ul>
 
