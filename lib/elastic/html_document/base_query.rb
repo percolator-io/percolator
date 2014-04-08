@@ -28,8 +28,6 @@ module Elastic
               title: { number_of_fragments: 0 },
               sanitized_content: { fragment_size: 100, number_of_fragments: 3 }
             },
-            pre_tags: ["<strong>"],
-            post_tags: ["</strong>"],
           }
         }
       end
