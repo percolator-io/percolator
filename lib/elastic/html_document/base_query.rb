@@ -25,7 +25,7 @@ module Elastic
         {
           highlight: {
             fields: {
-              title: { },
+              title: { number_of_fragments: 0 },
               sanitized_content: { fragment_size: 100, number_of_fragments: 3 }
             },
             pre_tags: ["<strong>"],
@@ -40,7 +40,7 @@ module Elastic
 
         attrs.id = mash._id
 
-        attrs.title = mash.highlight.try(:title) if mash.highlight.try(:title)
+        attrs.title = mash.highlight.try(:title).try(:first) if mash.highlight.try(:title)
         attrs.description = highlighted_sanitized_content.join(' ') if highlighted_sanitized_content.any?
 
         ::HtmlDocument.new attrs
