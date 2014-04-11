@@ -30,6 +30,8 @@ FactoryGirl.define do
         keywords: ['keyword', FactoryGirl.generate(:string)].join(','),
         sanitized_content: FactoryGirl.generate(:text),
         blacklists: false,
+        trustworthiness: { reputation: 100, confidence: 100 },
+        child_safety: { reputation: 100, confidence: 100 },
     }
   end
 

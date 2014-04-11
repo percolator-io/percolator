@@ -186,7 +186,8 @@ module Elastic
                 }
               }
             },
-            { missing: { field: "#{category_name}" } },
+            # uncomment when closed https://github.com/elasticsearch/elasticsearch/issues/4192
+            #{ missing: { field: "#{category_name}" } },
           ]
         }
       end
