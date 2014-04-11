@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 source 'https://rails-assets.org'
 
-gem 'rails'
+gem 'rails', '4.0.3'
 
 gem 'pg'
 gem 'rails-observers'
@@ -9,7 +9,9 @@ gem 'rails-observers'
 gem 'uglifier', '>= 1.3.0'
 gem 'therubyracer'
 gem 'jquery-rails'
+gem 'sprockets', '2.11.0' # remove
 gem 'sass-rails', '>= 3.2'
+gem 'sass', '3.2.14' #remove
 gem 'haml'
 gem 'bootstrap-sass'
 gem 'react-rails'
