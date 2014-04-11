@@ -159,7 +159,7 @@ module Elastic
 
       def verified_content_filter
         {
-          and: [wot_filter(:trustworthiness, 40, 15), wot_filter(:child_safety, 40, 15),  white_list]
+          and: [wot_filter(:trustworthiness, 50, 0), wot_filter(:child_safety, 50, 0),  white_list]
         }
       end
 
