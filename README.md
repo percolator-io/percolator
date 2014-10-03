@@ -1,3 +1,6 @@
+Проект больше не развивается. На домене percolator.io мой блог. [Его исходники](https://github.com/darkleaf/percolator).
+
+
 # Percolator
 
 * сохраняет закладки одной [кнопкой](https://chrome.google.com/webstore/detail/percolator-client/aghgeijikimmbblcablcfinnholopmaj)
